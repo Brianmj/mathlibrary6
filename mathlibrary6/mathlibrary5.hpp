@@ -1744,17 +1744,17 @@ namespace knu
 		typedef Mat3<double>    Matrix3d;
 		typedef Mat4<double>    Matrix4d;
         
-        using   v2i =           Vec2<int>;
-        using   v3i =           Vec3<int>;
-        using   v4i =           Vec4<int>;
+        using   vector2i =           Vec2<int>;
+        using   vector3i =           Vec3<int>;
+        using   vector4i =           Vec4<int>;
         
-        using   v2f =           Vec2<float>;
-        using   v3f =           Vec3<float>;
-        using   v4f =           Vec4<float>;
+        using   vector2f =           Vec2<float>;
+        using   vector3f =           Vec3<float>;
+        using   vector4f =           Vec4<float>;
         
-        using   v2d =           Vec2<double>;
-        using   v3d =           Vec3<double>;
-        using   v4d =           Vec4<double>;
+        using   vector2d =           Vec2<double>;
+        using   vector3d =           Vec3<double>;
+        using   vector4d =           Vec4<double>;
         
         using   m2i =           Mat2<int>;
         using   m3i =           Mat3<int>;

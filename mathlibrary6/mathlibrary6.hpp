@@ -175,7 +175,7 @@ namespace knu {
 					return (false);
 				}
 
-				float dot(const vec2 &v)const
+				T dot(const vec2 &v)const
 				{
 					return ((x * v.x) + (y * v.y));
 				}
@@ -611,8 +611,8 @@ namespace knu {
 					elements[3] = d;
 				}
 
-				mat2<T>(const mat2<T> &m) :
-					elements(MAT_2_2)
+				mat2(const mat2 &m) :
+					elements()
 				{
 					std::copy(std::begin(m.elements), std::end(m.elements),
 						std::begin(elements));
@@ -711,53 +711,51 @@ namespace knu {
 					set_column_1(v.x, v.y);
 				}
 
-				mat2<T> &set_identity()
+				mat2 &set_identity()
 				{
 					set_row_0(1, 0);
 					set_row_1(0, 1);
 					return *this;
 				}
 
-				mat2<T> &zero()
+				mat2 &zero()
 				{
-					std::fill(std::begin(elements), std::end(elements), 0);
+					std::fill(std::begin(elements), std::end(elements),
+						static_cast<T>(0));
 					return *this;
 				}
 
-				mat2<T> operator+(const mat2<T> &m)const
+				mat2 operator+(const mat2 &m)const
 				{
-					mat2<T> ret(elements[0] + m.elements[0],
+					return mat2(elements[0] + m.elements[0],
 						elements[1] + m.elements[1],
 						elements[2] + m.elements[2],
 						elements[3] + m.elements[3]);
-					return ret;
 				}
 
-				mat2<T> &operator+=(const mat2<T> &m)
+				mat2 &operator+=(const mat2 &m)
 				{
 					*this = *this + m;
 					return *this;
 				}
 
-				mat2<T> operator-(const mat2<T> &m)const
+				mat2 operator-(const mat2 &m)const
 				{
-					mat2<T> ret(elements[0] - m.elements[0],
+					return mat2(elements[0] - m.elements[0],
 						elements[1] - m.elements[1],
 						elements[2] - m.elements[2],
 						elements[3] - m.elements[3]);
-					return ret;
 				}
 
-				mat2<T> &operator-=(const mat2<T> &m)
+				mat2 &operator-=(const mat2 &m)
 				{
 					*this = *this - m;
 					return *this;
 				}
 
-//=========================== COME BACK HERE
-				mat2<T> operator*(const mat2<T> &m)const
+				mat2 operator*(const mat2 &m)const
 				{
-					mat2<T> ret;
+					mat2 ret;
 					ret[0] = get_row_0().dot(m.get_column_0());
 					ret[2] = get_row_0().dot(m.get_column_1());
 
@@ -766,7 +764,7 @@ namespace knu {
 					return ret;
 				}
 
-				mat2<T> &scale(T x, T y)
+				mat2 &scale(T x, T y)
 				{
 					set_row_0(x, 0);
 					set_row_1(0, y);
@@ -804,20 +802,20 @@ namespace knu {
 
 		} // namespace of v1
 
-		using v2f = vec2<float>;
-		using v2d = vec2<double>;
-		using v2i = vec2<std::uint32_t>;
-		using v2l = vec2<std::uint64_t>;
+		using vector2f = vec2<float>;
+		using vector2d = vec2<double>;
+		using vector2i = vec2<std::uint32_t>;
+		using vector2l = vec2<std::uint64_t>;
 
-		using v3f = vec3<float>;
-		using v3d = vec3<double>;
-		using v3i = vec3<std::uint32_t>;
-		using v3l = vec3<std::uint64_t>;
+		using vector3f = vec3<float>;
+		using vector3d = vec3<double>;
+		using vector3i = vec3<std::uint32_t>;
+		using vector3l = vec3<std::uint64_t>;
 
-		using v4f = vec4<float>;
-		using v4d = vec4<double>;
-		using v4i = vec4<std::uint32_t>;
-		using v4l = vec4<std::uint64_t>;
+		using vector4f = vec4<float>;
+		using vector4d = vec4<double>;
+		using vector4i = vec4<std::uint32_t>;
+		using vector4l = vec4<std::uint64_t>;
 
 		using matrix2f = mat2<float>;
 		using matrix2d = mat2<double>;
