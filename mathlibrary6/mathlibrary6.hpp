@@ -473,6 +473,13 @@ namespace knu {
 					return (*this);
 				}
 
+				bool operator ==(const vec4 &v) const
+				{
+					return ((abs(x - v.x) <= KNU_EPSILON<T>) &&
+						(abs(y - v.y) <= KNU_EPSILON<T>) &&
+						(abs(z - v.z) <= KNU_EPSILON<T>) &&
+						(abs(w - v.w) <= KNU_EPSILON<T>));
+				}
 
 				vec4 operator +(const vec4 &v)const
 				{
@@ -1123,17 +1130,17 @@ namespace knu {
 			}; // mat3
 
 			template<typename T>
-			class mat4
+			struct mat4
 			{
 			public:
 				using value_type = T;
 
-				mat4<T>()
+				mat4():elements()
 				{
-					identity();
+					set_identity();
 				}
 
-				mat4<T>(T a, T b, T c, T d, T e, T f, T g, T h, T i, T j, T k, T l, T m, T n, T o, T p)
+				mat4(T a, T b, T c, T d, T e, T f, T g, T h, T i, T j, T k, T l, T m, T n, T o, T p)
 				{
 					elements[0] = a;
 					elements[1] = b;
@@ -1153,19 +1160,28 @@ namespace knu {
 					elements[15] = p;
 				}
 
-				template<typename T2>
-				mat4<T>(const mat4<T2> &m)
+				mat4(const mat4 &m)
 				{
 					std::copy(std::begin(m.elements), std::end(m.elements),
 						std::begin(elements));
 				}
 
-				template<typename T2>
-				mat4<T> &operator=(const mat4<T2> &m)
+				mat4 &operator=(const mat4 &m)
 				{
 					std::copy(std::begin(m.elements), std::end(m.elements),
 						std::begin(elements));
 					return *this;
+				}
+
+				bool operator==(const mat4 &m) const
+				{
+					bool are_equal = std::equal(std::begin(elements), std::end(elements),
+						std::begin(m.elements),
+						[](auto e1, auto e2) -> bool {
+						return abs(e1 - e2) <= KNU_EPSILON<T>;
+					});
+
+					return are_equal;
 				}
 
 				T &operator [](int i)
@@ -1506,7 +1522,7 @@ namespace knu {
 					return *this;
 				}
 
-				mat4 &identity()
+				mat4 &set_identity()
 				{
 					set_row_0(1, 0, 0, 0);
 					set_row_1(0, 1, 0, 0);
@@ -1514,6 +1530,20 @@ namespace knu {
 					set_row_3(0, 0, 0, 1);
 
 					return *this;
+				}
+
+				bool is_identity() const
+				{
+					vec4<T> r0 = { 1, 0, 0, 0 };
+					vec4<T> r1 = { 0, 1, 0, 0 };
+					vec4<T> r2 = { 0, 0, 1, 0 };
+					vec4<T> r3 = { 0, 0, 0, 1 };
+
+
+					return get_row_0() == r0 &&
+						get_row_1() == r1 &&
+						get_row_2() == r2 &&
+						get_row_3() == r3;
 				}
 
 				mat4 &zero()
@@ -1575,6 +1605,11 @@ namespace knu {
 		using matrix3d = mat3<double>;
 		using matrix3i = mat3<int>;
 		using matrix3l = mat3<long>;
+
+		using matrix4f = mat4<float>;
+		using matrix4d = mat4<double>;
+		using matrix4i = mat4<int>;
+		using matrix4l = mat4<long>;
 
 	} // namespace math
 } // namespace knu

@@ -303,5 +303,18 @@ namespace UnitTest1
 			//Assert::AreEqual(m, wrong);
 			Assert::AreEqual(m, right);
 		}
+
+		TEST_METHOD(Mat4Identity)
+		{
+			matrix4f m1;
+			matrix4f m2(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+
+			//Assert::AreEqual(m1, m2);
+			m2.set_identity();
+			Assert::AreEqual(m1, m2);
+			Assert::AreEqual(m1.is_identity(), true);
+			m2.elements[5] = 4;
+			Assert::AreEqual(m2.is_identity(), false);
+		}
 	};
 }
