@@ -263,6 +263,13 @@ namespace knu {
 					return (*this);
 				}
 
+				bool operator ==(const vec3 &v) const
+				{
+					return ((abs(x - v.x) <= KNU_EPSILON<T>) &&
+						(abs(y - v.y) <= KNU_EPSILON<T>) &&
+						(abs(z - v.z) <= KNU_EPSILON<T>));
+				}
+
 				const vec3 operator +(const vec3 &v)const
 				{
 					return (vec3(x + v.x, y + v.y, z + v.z));
@@ -799,17 +806,17 @@ namespace knu {
 			};	// Mat2
 
 			template<typename T>
-			class mat3
+			struct mat3
 			{
 			public:
 				using value_type = T;
 
-				mat3()
+				mat3():elements()
 				{
 					set_identity();
 				}
 
-				mat3<T>(T a, T b, T c, T d, T e, T f, T g, T h, T i)
+				mat3(T a, T b, T c, T d, T e, T f, T g, T h, T i)
 				{
 					elements[0] = a;
 					elements[1] = b;
@@ -822,19 +829,28 @@ namespace knu {
 					elements[8] = i;
 				}
 
-				template<typename T2>
-				mat3<T>(const mat3<T2> &m)
+				mat3(const mat3 &m)
 				{
 					std::copy(std::begin(m.elements), std::end(m.elements),
 						std::begin(elements));
 				}
 
-				template<typename T2>
-				mat3<T> &operator=(const mat3<T2> &m)
+				mat3 &operator=(const mat3 &m)
 				{
 					std::copy(std::begin(m.elements), std::end(m.elements),
 						std::begin(elements));
 					return *this;
+				}
+
+				bool operator==(const mat3 &m) const
+				{
+					bool are_equal = std::equal(std::begin(elements), std::end(elements),
+						std::begin(m.elements),
+						[](auto e1, auto e2) -> bool {
+						return abs(e1 - e2) <= KNU_EPSILON<T>;
+					});
+
+					return are_equal;
 				}
 
 				T &operator [](int i)
@@ -847,74 +863,70 @@ namespace knu {
 					return elements[i];
 				}
 
-
 				vec3<T> get_row_0()const
 				{
-					return vec3<T>(elements[0], elements[1], elements[2]);
+					return vec3<T>(elements[0], elements[3], elements[6]);
 				}
 
 				vec3<T> get_row_1()const
 				{
-					return vec3<T>(elements[3], elements[4], elements[5]);
+					return vec3<T>(elements[1], elements[4], elements[7]);
 				}
 
 				vec3<T> get_row_2()const
 				{
-					return vec3<T>(elements[6], elements[7], elements[8]);
+					return vec3<T>(elements[2], elements[5], elements[8]);
 				}
 
 				void set_row_0(T x, T y, T z)
 				{
 					elements[0] = x;
-					elements[1] = y;
-					elements[2] = z;
+					elements[3] = y;
+					elements[6] = z;
 				}
 
-				template<typename T2>
-				void set_row_0(const vec3<T2> &v)
+				void set_row_0(const vec3<T> &v)
 				{
 					set_row_0(v.x, v.y, v.z);
 				}
 
 				void set_row_1(T x, T y, T z)
 				{
-					elements[3] = x;
+					elements[1] = x;
 					elements[4] = y;
-					elements[5] = z;
+					elements[7] = z;
 				}
 
-				template<typename T2>
-				void set_row_1(const vec3<T2> &v)
+				void set_row_1(const vec3<T> &v)
 				{
 					set_row_1(v.x, v.y, v.z);
 				}
 
 				void set_row_2(T x, T y, T z)
 				{
-					elements[6] = x;
-					elements[7] = y;
+					elements[2] = x;
+					elements[5] = y;
 					elements[8] = z;
 				}
 
-				template<typename T2>
-				void set_row_2(const vec3<T2> &v)
+				void set_row_2(const vec3<T> &v)
 				{
 					set_row_2(v.x, v.y, v.z);
 				}
 
 				vec3<T> get_column_0()const
 				{
-					return vec3<T>(elements[0], elements[3], elements[6]);
+					return vec3<T>(elements[0], elements[1], elements[2]);
 				}
 
 				vec3<T> get_column_1()const
 				{
-					return vec3<T>(elements[1], elements[4], elements[7]);
+					return vec3<T>(elements[3], elements[4], elements[5]);
 				}
 
 				vec3<T> get_column_2()const
 				{
-					return vec3<T>(elements[2], elements[5], elements[8]);
+					return vec3<T>(elements[6], elements[7], elements[8]);
 				}
 
 				void set_column_0(T x, T y, T z)
@@ -924,42 +936,38 @@ namespace knu {
 					elements[2] = z;
 				}
 
-				template<typename T2>
-				void set_column_0(const vec3<T2> &v)
+				void set_column_0(const vec3<T> &v)
 				{
 					set_column_0(v.x, v.y, v.z);
 				}
 
 				void set_column_1(T x, T y, T z)
 				{
-					elements[1] = x;
+					elements[3] = x;
 					elements[4] = y;
-					elements[7] = z;
+					elements[5] = z;
 				}
 
-				template<typename T2>
-				void set_column_1(const vec3<T2> &v)
+				void set_column_1(const vec3<T> &v)
 				{
 					set_column_1(v.x, v.y, v.z);
 				}
 
 				void set_column_2(T x, T y, T z)
 				{
-					elements[2] = x;
-					elements[5] = y;
+					elements[6] = x;
+					elements[7] = y;
 					elements[8] = z;
 				}
 
-				template<typename T2>
-				void set_column_2(const vec3<T2> &v)
+				void set_column_2(const vec3<T> &v)
 				{
 					set_column_2(v.x, v.y, v.z);
 				}
 
-				template<typename T2>
-				mat3<T> operator+(const mat3<T2> &m)const
+				mat3 operator+(const mat3 &m)const
 				{
-					mat3<T> ret(elements[0] + m.elements[0],
+					mat3 ret(elements[0] + m.elements[0],
 						elements[1] + m.elements[1],
 						elements[2] + m.elements[2],
 						elements[3] + m.elements[3],
@@ -971,15 +979,13 @@ namespace knu {
 					return ret;
 				}
 
-				template<typename T2>
-				mat3<T> &operator +=(const mat3<T2> &m)
+				mat3 &operator +=(const mat3 &m)
 				{
 					*this = *this + m;
 					return *this;
 				}
 
-				template<typename T2>
-				mat3<T> operator-(const mat3<T2> &m)const
+				mat3 operator-(const mat3 &m)const
 				{
 					mat3<T> ret(elements[0] - m.elements[0],
 						elements[1] - m.elements[1],
@@ -993,55 +999,64 @@ namespace knu {
 					return ret;
 				}
 
-				template<typename T2>
-				mat3<T> &operator -=(const mat3<T2> &m)
+				mat3 &operator -=(const mat3 &m)
 				{
 					*this = *this - m;
 					return *this;
 				}
 
-				template<typename T2>
-				mat3<T> operator*(const mat3<T2> &m)const
+				mat3 operator*(const mat3 &m)const
 				{
 					mat3<T> ret;
 					ret[0] = get_row_0().dot(m.get_column_0());
-					ret[1] = get_row_0().dot(m.get_column_1());
-					ret[2] = get_row_0().dot(m.get_column_2());
+					ret[3] = get_row_0().dot(m.get_column_1());
+					ret[6] = get_row_0().dot(m.get_column_2());
 
-					ret[3] = get_row_1().dot(m.get_column_0());
+					ret[1] = get_row_1().dot(m.get_column_0());
 					ret[4] = get_row_1().dot(m.get_column_1());
-					ret[5] = get_row_1().dot(m.get_column_2());
+					ret[7] = get_row_1().dot(m.get_column_2());
 
-					ret[6] = get_row_2().dot(m.get_column_0());
-					ret[7] = get_row_2().dot(m.get_column_1());
+					ret[2] = get_row_2().dot(m.get_column_0());
+					ret[5] = get_row_2().dot(m.get_column_1());
 					ret[8] = get_row_2().dot(m.get_column_2());
 
 					return ret;
 				}
 
-				template<typename T2>
-				mat3<T> &operator*=(const mat3<T2> &m)
+				mat3 &operator*=(const mat3 &m)
 				{
 					*this = *this * m;
 					return *this;
 				}
 
-				mat3<T> &set_identity()
+				mat3 &set_identity()
 				{
-					set_col_0(1, 0, 0);
-					set_col_1(0, 1, 0);
-					set_col_2(0, 0, 1);
+					set_column_0(1, 0, 0);
+					set_column_1(0, 1, 0);
+					set_column_2(0, 0, 1);
 
 					return *this;
 				}
 
-				mat3<T> &zero()
+				bool is_identity() const
 				{
-					std::fill(std::begin(elements), std::end(elements), 0);
+					vec3<T> r0 = { 1, 0, 0 };
+					vec3<T> r1 = { 0, 1, 0 };
+					vec3<T> r2 = { 0, 0, 1 };
+
+					return get_row_0() == r0 &&
+						get_row_1() == r1 &&
+						get_row_2() == r2;
+				}
+
+				mat3 &zero()
+				{
+					std::fill(std::begin(elements), std::end(elements),
+						static_cast<T>(0));
 					return *this;
 				}
 
-				mat3<T> &scale(T x, T y, T z)
+				mat3 &scale(T x, T y, T z)
 				{
 					set_row_0(x, 0, 0);
 					set_row_1(0, y, 0);
@@ -1049,7 +1064,7 @@ namespace knu {
 					return *this;
 				}
 
-				mat3<T> &transpose()
+				mat3 &transpose()
 				{
 					auto row0 = get_row_0();
 					auto row1 = get_row_1();
@@ -1062,7 +1077,7 @@ namespace knu {
 					return *this;
 				}
 
-				mat3<T> &rotate_x(T radians)
+				mat3 &rotation_x(T radians)
 				{
 					T c = cos(radians);
 					T s = sin(radians);
@@ -1074,7 +1089,7 @@ namespace knu {
 					return *this;
 				}
 
-				mat3<T> &rotate_y(T radians)
+				mat3 &rotation_y(T radians)
 				{
 					T c = cos(radians);
 					T s = sin(radians);
@@ -1086,13 +1101,13 @@ namespace knu {
 					return *this;
 				}
 
-				mat3<T> &rotate_z(T radians)
+				mat3 &rotation_z(T radians)
 				{
 					T c = cos(radians);
 					T s = sin(radians);
 
-					set_row_0(c, s, 0);
-					set_row_1(-s, c, 0);
+					set_row_0(c, -s, 0);
+					set_row_1(s, c, 0);
 					set_row_2(0, 0, 1);
 
 					return *this;
@@ -1105,7 +1120,7 @@ namespace knu {
 
 			public:
 				std::array<T, MAT_3_3> elements;
-			};
+			}; // mat3
 
 
 		} // namespace of v1

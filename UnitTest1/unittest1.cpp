@@ -70,7 +70,7 @@ namespace UnitTest1
 			Assert::AreEqual(c1, v, L"Not equal: Should be 3 and 4");
 		}
 
-		TEST_METHOD(IDENTITY_TEST)
+		TEST_METHOD(Mat2IDENTITY_TEST)
 		{
 			mat2<float> m1;
 
@@ -166,7 +166,7 @@ namespace UnitTest1
 			Assert::AreEqual(res, comp2);
 		}
 
-		TEST_METHOD(ScaleTest)
+		TEST_METHOD(ScaleTestMat2)
 		{
 			// TODO: Your test code here
 			matrix2i m1;
@@ -180,7 +180,7 @@ namespace UnitTest1
 			Assert::AreEqual(m1, comp2);
 		}
 
-		TEST_METHOD(TransposeTest)
+		TEST_METHOD(TransposeTestMat2)
 		{
 			// TODO: Your test code here
 			matrix2i m1{ 3, 4, 7, 9 };
@@ -197,7 +197,7 @@ namespace UnitTest1
 			Assert::AreEqual(m1, comp2);
 		}
 
-		TEST_METHOD(RotationTest)
+		TEST_METHOD(RotationTestMat2)
 		{
 			constexpr float PI = 3.1415926535897932384626433832795f;
 
@@ -213,6 +213,92 @@ namespace UnitTest1
 
 			matrix2f wrong(c + 0.1f, s + 0.1f, -s, c);
 			matrix2f right(c, s, -s, c);
+
+			//Assert::AreEqual(m, wrong);
+			Assert::AreEqual(m, right);
+		}
+
+		TEST_METHOD(Mat3IdentityTest)
+		{
+			matrix3f m1(3, 4, 5, 6, 7, 8, 9, 10, 11);
+			matrix3f m2;
+
+			//Assert::AreEqual(m1.is_identity(), true);
+			Assert::AreEqual(m2.is_identity(), true);
+
+			m1.set_identity();
+			Assert::AreEqual(m2, m1);
+		}
+
+		TEST_METHOD(Mat3Mat3Multiplication)
+		{
+			matrix3i m1{ 4, 7, 2, 3, 2, 1, 5, 0, 8 };
+			matrix3i m2{ 2, 4, 1, 7, 3, 0, 2, 4, 2 };
+
+			matrix3i res = m1 * m2;
+
+			matrix3i wrong{ 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+			matrix3i right{ 25, 22, 16, 37, 55, 17, 30, 22, 24 };
+
+			//Assert::AreEqual(res, wrong);
+			Assert::AreEqual(res, right);
+		}
+
+		TEST_METHOD(Mat3RotationTestZ)
+		{
+			constexpr float PI = 3.1415926535897932384626433832795f;
+
+			// 1.0471975511965977461542144610932
+			const float pi_div_3 = PI / 3.0f;
+
+			matrix3f m;
+			m.rotation_z(pi_div_3);
+
+			float c = cos(pi_div_3);
+			float s = sin(pi_div_3);
+
+			matrix3f wrong(c + 0.1f, s + 0.1f, 0, -s, c, 0, 0, 0, 1.0f);
+			matrix3f right(c, s, 0.0f, -s, c, 0.0f, 0.0f, 0.0f, 1.0);
+
+			//Assert::AreEqual(m, wrong);
+			Assert::AreEqual(m, right);
+		}
+
+		TEST_METHOD(Mat3RotationTestY)
+		{
+			constexpr float PI = 3.1415926535897932384626433832795f;
+
+			// 1.0471975511965977461542144610932
+			const float pi_div_3 = PI / 3.0f;
+
+			matrix3f m;
+			m.rotation_y(pi_div_3);
+
+			float c = cos(pi_div_3);
+			float s = sin(pi_div_3);
+
+			matrix3f wrong(c + 0.1f, s + 0.1f, 0, -s, c, 0, 0, 0, 1.0f);
+			matrix3f right(c, 0.0f, s, 0.0f, 1.0f, 0.0f, -s, 0.0f, c);
+
+			//Assert::AreEqual(m, wrong);
+			Assert::AreEqual(m, right);
+		}
+
+		TEST_METHOD(Mat3RotationTestX)
+		{
+			constexpr float PI = 3.1415926535897932384626433832795f;
+
+			// 1.0471975511965977461542144610932
+			const float pi_div_3 = PI / 3.0f;
+
+			matrix3f m;
+			m.rotation_x(pi_div_3);
+
+			float c = cos(pi_div_3);
+			float s = sin(pi_div_3);
+
+			matrix3f wrong(c + 0.1f, s + 0.1f, 0, -s, c, 0, 0, 0, 1.0f);
+			matrix3f right(1.0f, 0.0f, 0.0f, 0.0f, c, -s, 0.0f, s, c);
 
 			//Assert::AreEqual(m, wrong);
 			Assert::AreEqual(m, right);
