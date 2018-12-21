@@ -770,7 +770,7 @@ namespace knu {
 					set_row_1(0, y);
 					return *this;
 				}
-				mat2<T> &transpose()
+				mat2 &transpose()
 				{
 					auto row0 = get_row_0();
 					auto row1 = get_row_1();
@@ -780,13 +780,13 @@ namespace knu {
 					return *this;
 				}
 
-				mat2<T> &rotation(T radians)
+				mat2 &rotation(T radians)
 				{
 					T c = cos(radians);
 					T s = sin(radians);
 
-					set_row_0(c, s);
-					set_row_1(-s, c);
+					set_row_0(c, -s);
+					set_row_1(s, c);
 					return *this;
 				}
 

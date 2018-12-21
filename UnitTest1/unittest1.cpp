@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "impl.h"
 #include <cassert>
+#include <cmath>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace knu::math;
@@ -163,6 +164,58 @@ namespace UnitTest1
 			matrix2i comp2{ 38, 11, 66, 32 };
 			//Assert::AreEqual(res, comp1);
 			Assert::AreEqual(res, comp2);
+		}
+
+		TEST_METHOD(ScaleTest)
+		{
+			// TODO: Your test code here
+			matrix2i m1;
+			m1.scale(4, 7);
+			matrix2i m2(4, 0, 0, 8);
+
+
+			// should be equal to m{4, 0, 0, 7}
+			matrix2i comp2{ 4, 0, 0, 7 };
+			//Assert::AreEqual(m1, m2);
+			Assert::AreEqual(m1, comp2);
+		}
+
+		TEST_METHOD(TransposeTest)
+		{
+			// TODO: Your test code here
+			matrix2i m1{ 3, 4, 7, 9 };
+			m1.transpose();
+			
+
+
+			// should be equal to m {3 4
+			//						 7 9}
+
+			matrix2i m2{ 3, 9, 4, 7 };
+			matrix2i comp2{ 3, 7, 4, 9 };
+			//Assert::AreEqual(m1, m2);
+			Assert::AreEqual(m1, comp2);
+		}
+
+		TEST_METHOD(RotationTest)
+		{
+			constexpr float PI = 3.1415926535897932384626433832795f;
+
+			// 1.0471975511965977461542144610932
+			const float pi_div_3 = PI / 3.0f;
+
+
+			matrix2f m;
+			m.rotation(pi_div_3);
+
+			float c = cos(pi_div_3);
+			float s = sin(pi_div_3);
+
+			matrix2f wrong(c + 0.1f, s + 0.1f, -s, c);
+			matrix2f right(c, s, -s, c);
+
+			//Assert::AreEqual(m, wrong);
+			Assert::AreEqual(m, right);
 		}
 	};
 }
