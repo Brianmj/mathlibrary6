@@ -798,6 +798,314 @@ namespace knu {
 				std::array<T, MAT_2_2> elements;
 			};	// Mat2
 
+			template<typename T>
+			class mat3
+			{
+			public:
+				using value_type = T;
+
+				mat3()
+				{
+					set_identity();
+				}
+
+				mat3<T>(T a, T b, T c, T d, T e, T f, T g, T h, T i)
+				{
+					elements[0] = a;
+					elements[1] = b;
+					elements[2] = c;
+					elements[3] = d;
+					elements[4] = e;
+					elements[5] = f;
+					elements[6] = g;
+					elements[7] = h;
+					elements[8] = i;
+				}
+
+				template<typename T2>
+				mat3<T>(const mat3<T2> &m)
+				{
+					std::copy(std::begin(m.elements), std::end(m.elements),
+						std::begin(elements));
+				}
+
+				template<typename T2>
+				mat3<T> &operator=(const mat3<T2> &m)
+				{
+					std::copy(std::begin(m.elements), std::end(m.elements),
+						std::begin(elements));
+					return *this;
+				}
+
+				T &operator [](int i)
+				{
+					return elements[i];
+				}
+
+				const T &operator [](int i)const
+				{
+					return elements[i];
+				}
+
+
+				vec3<T> get_row_0()const
+				{
+					return vec3<T>(elements[0], elements[1], elements[2]);
+				}
+
+				vec3<T> get_row_1()const
+				{
+					return vec3<T>(elements[3], elements[4], elements[5]);
+				}
+
+				vec3<T> get_row_2()const
+				{
+					return vec3<T>(elements[6], elements[7], elements[8]);
+				}
+
+				void set_row_0(T x, T y, T z)
+				{
+					elements[0] = x;
+					elements[1] = y;
+					elements[2] = z;
+				}
+
+				template<typename T2>
+				void set_row_0(const vec3<T2> &v)
+				{
+					set_row_0(v.x, v.y, v.z);
+				}
+
+				void set_row_1(T x, T y, T z)
+				{
+					elements[3] = x;
+					elements[4] = y;
+					elements[5] = z;
+				}
+
+				template<typename T2>
+				void set_row_1(const vec3<T2> &v)
+				{
+					set_row_1(v.x, v.y, v.z);
+				}
+
+				void set_row_2(T x, T y, T z)
+				{
+					elements[6] = x;
+					elements[7] = y;
+					elements[8] = z;
+				}
+
+				template<typename T2>
+				void set_row_2(const vec3<T2> &v)
+				{
+					set_row_2(v.x, v.y, v.z);
+				}
+
+				vec3<T> get_column_0()const
+				{
+					return vec3<T>(elements[0], elements[3], elements[6]);
+				}
+
+				vec3<T> get_column_1()const
+				{
+					return vec3<T>(elements[1], elements[4], elements[7]);
+				}
+
+				vec3<T> get_column_2()const
+				{
+					return vec3<T>(elements[2], elements[5], elements[8]);
+				}
+
+				void set_column_0(T x, T y, T z)
+				{
+					elements[0] = x;
+					elements[1] = y;
+					elements[2] = z;
+				}
+
+				template<typename T2>
+				void set_column_0(const vec3<T2> &v)
+				{
+					set_column_0(v.x, v.y, v.z);
+				}
+
+				void set_column_1(T x, T y, T z)
+				{
+					elements[1] = x;
+					elements[4] = y;
+					elements[7] = z;
+				}
+
+				template<typename T2>
+				void set_column_1(const vec3<T2> &v)
+				{
+					set_column_1(v.x, v.y, v.z);
+				}
+
+				void set_column_2(T x, T y, T z)
+				{
+					elements[2] = x;
+					elements[5] = y;
+					elements[8] = z;
+				}
+
+				template<typename T2>
+				void set_column_2(const vec3<T2> &v)
+				{
+					set_column_2(v.x, v.y, v.z);
+				}
+
+				template<typename T2>
+				mat3<T> operator+(const mat3<T2> &m)const
+				{
+					mat3<T> ret(elements[0] + m.elements[0],
+						elements[1] + m.elements[1],
+						elements[2] + m.elements[2],
+						elements[3] + m.elements[3],
+						elements[4] + m.elements[4],
+						elements[5] + m.elements[5],
+						elements[6] + m.elements[6],
+						elements[7] + m.elements[7],
+						elements[8] + m.elements[8]);
+					return ret;
+				}
+
+				template<typename T2>
+				mat3<T> &operator +=(const mat3<T2> &m)
+				{
+					*this = *this + m;
+					return *this;
+				}
+
+				template<typename T2>
+				mat3<T> operator-(const mat3<T2> &m)const
+				{
+					mat3<T> ret(elements[0] - m.elements[0],
+						elements[1] - m.elements[1],
+						elements[2] - m.elements[2],
+						elements[3] - m.elements[3],
+						elements[4] - m.elements[4],
+						elements[5] - m.elements[5],
+						elements[6] - m.elements[6],
+						elements[7] - m.elements[7],
+						elements[8] - m.elements[8]);
+					return ret;
+				}
+
+				template<typename T2>
+				mat3<T> &operator -=(const mat3<T2> &m)
+				{
+					*this = *this - m;
+					return *this;
+				}
+
+				template<typename T2>
+				mat3<T> operator*(const mat3<T2> &m)const
+				{
+					mat3<T> ret;
+					ret[0] = get_row_0().dot(m.get_column_0());
+					ret[1] = get_row_0().dot(m.get_column_1());
+					ret[2] = get_row_0().dot(m.get_column_2());
+
+					ret[3] = get_row_1().dot(m.get_column_0());
+					ret[4] = get_row_1().dot(m.get_column_1());
+					ret[5] = get_row_1().dot(m.get_column_2());
+
+					ret[6] = get_row_2().dot(m.get_column_0());
+					ret[7] = get_row_2().dot(m.get_column_1());
+					ret[8] = get_row_2().dot(m.get_column_2());
+
+					return ret;
+				}
+
+				template<typename T2>
+				mat3<T> &operator*=(const mat3<T2> &m)
+				{
+					*this = *this * m;
+					return *this;
+				}
+
+				mat3<T> &set_identity()
+				{
+					set_col_0(1, 0, 0);
+					set_col_1(0, 1, 0);
+					set_col_2(0, 0, 1);
+
+					return *this;
+				}
+
+				mat3<T> &zero()
+				{
+					std::fill(std::begin(elements), std::end(elements), 0);
+					return *this;
+				}
+
+				mat3<T> &scale(T x, T y, T z)
+				{
+					set_row_0(x, 0, 0);
+					set_row_1(0, y, 0);
+					set_row_2(0, 0, z);
+					return *this;
+				}
+
+				mat3<T> &transpose()
+				{
+					auto row0 = get_row_0();
+					auto row1 = get_row_1();
+					auto row2 = get_row_2();
+
+					set_column_0(row0);
+					set_column_1(row1);
+					set_column_2(row2);
+
+					return *this;
+				}
+
+				mat3<T> &rotate_x(T radians)
+				{
+					T c = cos(radians);
+					T s = sin(radians);
+
+					set_row_0(1, 0, 0);
+					set_row_1(0, c, s);
+					set_row_2(0, -s, c);
+
+					return *this;
+				}
+
+				mat3<T> &rotate_y(T radians)
+				{
+					T c = cos(radians);
+					T s = sin(radians);
+
+					set_row_0(c, 0, -s);
+					set_row_1(0, 1, 0);
+					set_row_2(s, 0, c);
+
+					return *this;
+				}
+
+				mat3<T> &rotate_z(T radians)
+				{
+					T c = cos(radians);
+					T s = sin(radians);
+
+					set_row_0(c, s, 0);
+					set_row_1(-s, c, 0);
+					set_row_2(0, 0, 1);
+
+					return *this;
+				}
+
+				T* data()
+				{
+					return &elements[0];
+				}
+
+			public:
+				std::array<T, MAT_3_3> elements;
+			};
 
 
 		} // namespace of v1
@@ -821,6 +1129,11 @@ namespace knu {
 		using matrix2d = mat2<double>;
 		using matrix2i = mat2<int>;
 		using matrix2l = mat2<long>;
+
+		using matrix3f = mat3<float>;
+		using matrix3d = mat3<double>;
+		using matrix3i = mat3<int>;
+		using matrix3l = mat3<long>;
 
 	} // namespace math
 } // namespace knu
@@ -849,6 +1162,22 @@ std::ostream &operator <<(std::ostream &os, const knu::math::mat2<T2> &m)
 
 template<typename T2>
 std::wostream &operator <<(std::wostream &wos, const knu::math::mat2<T2> &m)
+{
+	wos << m[0] << " " << m[2] << "\n"
+		<< m[1] << " " << m[3];
+	return wos;
+}
+
+template<typename T2>
+std::ostream &operator <<(std::ostream &os, const knu::math::mat3<T2> &m)
+{
+	os << m[0] << " " << m[2] << "\n"
+		<< m[1] << " " << m[3];
+	return os;
+}
+
+template<typename T2>
+std::wostream &operator <<(std::wostream &wos, const knu::math::mat3<T2> &m)
 {
 	wos << m[0] << " " << m[2] << "\n"
 		<< m[1] << " " << m[3];
