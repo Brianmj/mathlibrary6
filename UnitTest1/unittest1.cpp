@@ -14,7 +14,7 @@ namespace UnitTest1
 	TEST_CLASS(UnitTest1)
 	{
 	public:
-		
+
 		TEST_METHOD(TestMethod1)
 		{
 			// TODO: Your test code here
@@ -185,7 +185,7 @@ namespace UnitTest1
 			// TODO: Your test code here
 			matrix2i m1{ 3, 4, 7, 9 };
 			m1.transpose();
-			
+
 
 
 			// should be equal to m {3 4
@@ -343,7 +343,21 @@ namespace UnitTest1
 
 			//Assert::AreEqual(res, wrong);
 			Assert::AreEqual(res, right);
+		}
 
+		TEST_METHOD(Mat4TranslationAndVectorMultiply)
+		{
+			matrix4i translation;
+			translation.translate(4, 5, 6);
+
+			vector4i point(0, 0, 0, 1);
+
+			vector4i res = translation * point;
+
+			vector4i wrong = { 0, 0, 0, 1 };
+			vector4i right = { 4, 5, 6, 1 };
+
+			Assert::AreEqual(res, right);
 		}
 	};
 }

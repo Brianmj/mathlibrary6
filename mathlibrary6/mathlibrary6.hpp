@@ -577,8 +577,7 @@ namespace knu {
 					return (false);
 				}
 
-				template<typename T2>
-				T dot(const vec4<T2> &v)const
+				T dot(const vec4 &v)const
 				{
 					return ((x * v.x) + (y * v.y) + (z * v.z) + (w * v.w));
 				}
@@ -1422,8 +1421,8 @@ namespace knu {
 					return ret;
 				}
 
-				template<typename T2>
-				mat4<T> operator*(const mat4<T2> &m)const
+
+				mat4 operator*(const mat4 &m)const
 				{
 					mat4<T> ret;
 
@@ -1593,41 +1592,57 @@ namespace knu {
 				std::array<T, MAT_4_4> elements;
 			};	// Matrix4
 
+			// for now, only supporting matrix post-multiplication
+			// so matrix * vector
+			template<typename T, typename T2>
+			vec4<T2> operator*(const mat4<T> &m, const vec4<T2> &v)
+			{
+				vec4<T2> ret;
+				ret.x = m.get_row_0().dot(v);
+				ret.y = m.get_row_1().dot(v);
+				ret.z = m.get_row_2().dot(v);
+				ret.w = m.get_row_3().dot(v);
+
+				return ret;
+			}
+
 
 		} // namespace of v1
 
 		using vector2f = vec2<float>;
 		using vector2d = vec2<double>;
-		using vector2i = vec2<std::uint32_t>;
-		using vector2l = vec2<std::uint64_t>;
+		using vector2i = vec2<std::int32_t>;
+		using vector2l = vec2<std::int64_t>;
 
 		using vector3f = vec3<float>;
 		using vector3d = vec3<double>;
-		using vector3i = vec3<std::uint32_t>;
-		using vector3l = vec3<std::uint64_t>;
+		using vector3i = vec3<std::int32_t>;
+		using vector3l = vec3<std::int64_t>;
 
 		using vector4f = vec4<float>;
 		using vector4d = vec4<double>;
-		using vector4i = vec4<std::uint32_t>;
-		using vector4l = vec4<std::uint64_t>;
+		using vector4i = vec4<std::int32_t>;
+		using vector4l = vec4<std::int64_t>;
 
 		using matrix2f = mat2<float>;
 		using matrix2d = mat2<double>;
-		using matrix2i = mat2<int>;
-		using matrix2l = mat2<long>;
+		using matrix2i = mat2<std::int32_t>;
+		using matrix2l = mat2<std::int64_t>;
 
 		using matrix3f = mat3<float>;
 		using matrix3d = mat3<double>;
-		using matrix3i = mat3<int>;
-		using matrix3l = mat3<long>;
+		using matrix3i = mat3<std::int32_t>;
+		using matrix3l = mat3<std::int64_t>;
 
 		using matrix4f = mat4<float>;
 		using matrix4d = mat4<double>;
-		using matrix4i = mat4<int>;
-		using matrix4l = mat4<long>;
+		using matrix4i = mat4<std::int32_t>;
+		using matrix4l = mat4<std::int64_t>;
 
 	} // namespace math
 } // namespace knu
+
+
 
 template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::vec2<T2> &v)
@@ -1640,6 +1655,20 @@ template<typename T2>
 std::wostream &operator <<(std::wostream &wos, const knu::math::vec2<T2> &v)
 {
 	wos << "(" << v.x << ", " << v.y << ")";
+	return wos;
+}
+
+template<typename T2>
+std::ostream &operator <<(std::ostream &os, const knu::math::vec4<T2> &v)
+{
+	os << "(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")";
+	return os;
+}
+
+template<typename T2>
+std::wostream &operator <<(std::wostream &wos, const knu::math::vec4<T2> &v)
+{
+	wos << "(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")";
 	return wos;
 }
 
