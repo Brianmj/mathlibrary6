@@ -316,5 +316,34 @@ namespace UnitTest1
 			m2.elements[5] = 4;
 			Assert::AreEqual(m2.is_identity(), false);
 		}
+
+		TEST_METHOD(Mat4MoveCopyconstruct)
+		{
+			matrix4i m1(matrix4i(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16));
+			matrix4i m2(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+			Assert::AreEqual(m1, m2);
+		}
+
+		TEST_METHOD(Mat4Mat4Mulitplication)
+		{
+			matrix4i m1(matrix4i(1, 5, 9, 13,
+				2, 6, 10, 14,
+				3, 7, 11, 15,
+				4, 8, 12, 16));
+			matrix4i m2(m1);
+
+			matrix4i res = m1 * m2;
+
+			matrix4i right(90, 202, 314, 426,
+				100, 228, 356, 484,
+				110, 254, 398, 542,
+				120, 280, 440, 600);
+
+			matrix4i wrong;
+
+			//Assert::AreEqual(res, wrong);
+			Assert::AreEqual(res, right);
+
+		}
 	};
 }

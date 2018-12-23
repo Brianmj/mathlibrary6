@@ -1166,10 +1166,25 @@ namespace knu {
 						std::begin(elements));
 				}
 
+				mat4(mat4 &&m):
+					elements(std::move(m.elements))
+				{
+					std::cout << "MATRIX4 MOVE CONSTRUCTOR CALLED\n";
+					//std::copy(std::begin(m.elements), std::end(m.elements),
+					//	std::begin(elements));
+				}
+
 				mat4 &operator=(const mat4 &m)
 				{
 					std::copy(std::begin(m.elements), std::end(m.elements),
 						std::begin(elements));
+					return *this;
+				}
+
+				mat4 &operator=(mat4 &&m)
+				{
+					elements = std::move(m.elements);
+					std::cout << "MATRIX4 MOVE ASSIGNMENT CALLED\n";
 					return *this;
 				}
 
@@ -1413,23 +1428,23 @@ namespace knu {
 					mat4<T> ret;
 
 					ret[0] = get_row_0().dot(m.get_column_0());
-					ret[1] = get_row_0().dot(m.get_column_1());
-					ret[2] = get_row_0().dot(m.get_column_2());
-					ret[3] = get_row_0().dot(m.get_column_3());
+					ret[4] = get_row_0().dot(m.get_column_1());
+					ret[8] = get_row_0().dot(m.get_column_2());
+					ret[12] = get_row_0().dot(m.get_column_3());
 
-					ret[4] = get_row_1().dot(m.get_column_0());
+					ret[1] = get_row_1().dot(m.get_column_0());
 					ret[5] = get_row_1().dot(m.get_column_1());
-					ret[6] = get_row_1().dot(m.get_column_2());
-					ret[7] = get_row_1().dot(m.get_column_3());
+					ret[9] = get_row_1().dot(m.get_column_2());
+					ret[13] = get_row_1().dot(m.get_column_3());
 
-					ret[8] = get_row_2().dot(m.get_column_0());
-					ret[9] = get_row_2().dot(m.get_column_1());
+					ret[2] = get_row_2().dot(m.get_column_0());
+					ret[6] = get_row_2().dot(m.get_column_1());
 					ret[10] = get_row_2().dot(m.get_column_2());
-					ret[11] = get_row_2().dot(m.get_column_3());
+					ret[14] = get_row_2().dot(m.get_column_3());
 
-					ret[12] = get_row_3().dot(m.get_column_0());
-					ret[13] = get_row_3().dot(m.get_column_1());
-					ret[14] = get_row_3().dot(m.get_column_2());
+					ret[3] = get_row_3().dot(m.get_column_0());
+					ret[7] = get_row_3().dot(m.get_column_1());
+					ret[11] = get_row_3().dot(m.get_column_2());
 					ret[15] = get_row_3().dot(m.get_column_3());
 
 					return ret;
@@ -1665,10 +1680,10 @@ std::wostream &operator <<(std::wostream &wos, const knu::math::mat3<T2> &m)
 template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::mat4<T2> &m)
 {
-	os << m[0] << " " << m[4] << m[8] << m[12] << "\n"
-		<< m[1] << " " << m[5] << m[9] << m[13] <<"\n"
-		<< m[2] << " " << m[6] << m[10] << m[14] << "\n"
-		<< m[3] << " " << m[7] << m[11] << m[15] << "\n";
+	os << m[0] << " " << m[4] << " " << m[8] << " " << m[12] << "\n"
+		<< m[1] << " " << m[5] << " " << m[9] << " " << m[13] << "\n"
+		<< m[2] << " " << m[6] << " " << m[10] << " " << m[14] << "\n"
+		<< m[3] << " " << m[7] << " " << m[11] << " " << m[15] << "\n";
 		
 	return os;
 }
@@ -1676,10 +1691,10 @@ std::ostream &operator <<(std::ostream &os, const knu::math::mat4<T2> &m)
 template<typename T2>
 std::wostream &operator <<(std::wostream &wos, const knu::math::mat4<T2> &m)
 {
-	wos << m[0] << " " << m[4] << m[8] << m[12] << "\n"
-		<< m[1] << " " << m[5] << m[9] << m[13] << "\n"
-		<< m[2] << " " << m[6] << m[10] << m[14] << "\n"
-		<< m[3] << " " << m[7] << m[11] << m[15] << "\n";
+	wos << m[0] << " " << m[4] << " " << m[8] << " " << m[12] << "\n"
+		<< m[1] << " " << m[5] << " " << m[9] << " " << m[13] << "\n"
+		<< m[2] << " " << m[6] << " " << m[10] << " " << m[14] << "\n"
+		<< m[3] << " " << m[7] << " " << m[11] << " " << m[15] << "\n";
 	return wos;
 }
 
