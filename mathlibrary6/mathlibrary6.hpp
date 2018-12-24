@@ -11,6 +11,16 @@ namespace knu {
 			template<typename T>
 			const T KNU_EPSILON = static_cast<T>(0.000001);
 
+			// Helper utility functions
+			template<typename T>
+			const T KNU_PI = static_cast<T>(3.141592653);
+
+			template<typename T>
+			const T DEGREES_TO_RADIANS_CONSTANT = static_cast<T>(3.141592653) / 180;
+
+			template<typename T>
+			const T RADIANS_TO_DEGREES_CONSTANT = 180 / static_cast<T>(3.141592653);
+
 			struct vector_component_2 {};
 			struct vector_component_3 {};
 			struct vector_component_4 {};
@@ -793,7 +803,7 @@ namespace knu {
 					return *this;
 				}
 
-				mat2 &rotation(T radians)
+				mat2 &rotation_z(T radians)
 				{
 					T c = cos(radians);
 					T s = sin(radians);
@@ -1503,8 +1513,8 @@ namespace knu {
 					T c = cos(radians);
 					T s = sin(radians);
 
-					set_row_0(c, s, 0, 0);
-					set_row_1(-s, c, 0, 0);
+					set_row_0(c, -s, 0, 0);
+					set_row_1(s, c, 0, 0);
 					set_row_2(0, 0, 1, 0);
 					set_row_3(0, 0, 0, 1);
 
@@ -1606,6 +1616,18 @@ namespace knu {
 				return ret;
 			}
 
+			template<typename T>
+			T degrees_to_radians(T degrees)
+			{
+				return (KNU_PI<T> * degrees) / static_cast<T>(180.0);
+			}
+
+			template<typename T>
+			T radians_to_degrees(T radians)
+			{
+				return (radians * RADIANS_TO_DEGREES_CONSTANT<T>);
+			}
+
 
 		} // namespace of v1
 
@@ -1659,6 +1681,20 @@ std::wostream &operator <<(std::wostream &wos, const knu::math::vec2<T2> &v)
 }
 
 template<typename T2>
+std::ostream &operator <<(std::ostream &os, const knu::math::vec3<T2> &v)
+{
+	os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+	return os;
+}
+
+template<typename T2>
+std::wostream &operator <<(std::wostream &wos, const knu::math::vec3<T2> &v)
+{
+	wos << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+	return wos;
+}
+
+template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::vec4<T2> &v)
 {
 	os << "(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")";
@@ -1676,7 +1712,7 @@ template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::mat2<T2> &m)
 {
 	os << m[0] << " " << m[2] << "\n"
-		<< m[1] << " " << m[3];
+		<< m[1] << " " << m[3] << "\n";
 	return os;
 }
 
@@ -1684,25 +1720,25 @@ template<typename T2>
 std::wostream &operator <<(std::wostream &wos, const knu::math::mat2<T2> &m)
 {
 	wos << m[0] << " " << m[2] << "\n"
-		<< m[1] << " " << m[3];
+		<< m[1] << " " << m[3] << "\n";
 	return wos;
 }
 
 template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::mat3<T2> &m)
 {
-	os << m[0] << " " << m[3] << m[6] << "\n"
-		<< m[1] << " " << m[4] << m[7] << "\n"
-		<< m[2] << " " << m[5] << m[8] << "\n";
+	os << m[0] << " " << m[3] << " " << m[6] << "\n"
+		<< m[1] << " " << m[4] << " " << m[7] << "\n"
+		<< m[2] << " " << m[5] << " " << m[8] << "\n";
 	return os;
 }
 
 template<typename T2>
 std::wostream &operator <<(std::wostream &wos, const knu::math::mat3<T2> &m)
 {
-	wos << m[0] << " " << m[3] << m[6] << "\n"
-		<< m[1] << " " << m[4] << m[7] << "\n"
-		<< m[2] << " " << m[5] << m[8] << "\n";
+	wos << m[0] << " " << m[3] << " " << m[6] << "\n"
+		<< m[1] << " " << m[4] << " " << m[7] << "\n"
+		<< m[2] << " " << m[5] << " " << m[8] << "\n";
 	return wos;
 }
 

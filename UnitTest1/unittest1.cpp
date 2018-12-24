@@ -206,7 +206,7 @@ namespace UnitTest1
 
 
 			matrix2f m;
-			m.rotation(pi_div_3);
+			m.rotation_z(pi_div_3);
 
 			float c = cos(pi_div_3);
 			float s = sin(pi_div_3);
@@ -357,6 +357,22 @@ namespace UnitTest1
 			vector4i wrong = { 0, 0, 0, 1 };
 			vector4i right = { 4, 5, 6, 1 };
 
+			Assert::AreEqual(res, right);
+		}
+
+		TEST_METHOD(Mat4RotationZMultiplyVec4)
+		{
+			matrix4f m;
+			m.rotation_z(degrees_to_radians(90.0f));
+
+			vector4f v{ 1.0f, 0.0f, 0.0f, 0.0f };
+
+			auto res = m * v;
+
+			vector4f wrong{ 1.0f, 1.0f, 0.0f, 0.0f };
+			vector4f right{ 0.0f, 1.0f, -0.0f, 0.0f };
+
+			//Assert::AreEqual(res, wrong);
 			Assert::AreEqual(res, right);
 		}
 	};
