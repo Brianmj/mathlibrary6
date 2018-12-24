@@ -1602,12 +1602,23 @@ namespace knu {
 				std::array<T, MAT_4_4> elements;
 			};	// Matrix4
 
+			template<typename T, typename T2>
+			vec3<T2> operator*(const mat3<T> &m, const vec3<T2> &v)
+			{
+				vec3<T2> ret;
+				ret.x = m.get_row_0().dot(v);
+				ret.y = m.get_row_1().dot(v);
+				ret.z = m.get_row_2().dot(v);
+
+				return ret;
+			}
+
 			// for now, only supporting matrix post-multiplication
 			// so matrix * vector
-			template<typename T, typename T2>
-			vec4<T2> operator*(const mat4<T> &m, const vec4<T2> &v)
+			template<typename T>
+			vec4<T> operator*(const mat4<T> &m, const vec4<T> &v)
 			{
-				vec4<T2> ret;
+				vec4<T> ret;
 				ret.x = m.get_row_0().dot(v);
 				ret.y = m.get_row_1().dot(v);
 				ret.z = m.get_row_2().dot(v);

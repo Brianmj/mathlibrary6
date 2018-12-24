@@ -360,9 +360,31 @@ namespace UnitTest1
 			Assert::AreEqual(res, right);
 		}
 
+		TEST_METHOD(Mat3RotationZMultiplyVec)
+		{
+			matrix3f m;
+			m.rotation_z(degrees_to_radians(90.0f));
+
+			vector3f v{ 1.0f, 0.0f, 0.0f };
+
+			auto res = m * v;
+
+			vector3f wrong{ 1.0f, 1.0f, 0.0f};
+			vector3f right{ 0.0f, 1.0f, -0.0f};
+
+			//Assert::AreEqual(res, wrong);
+			Assert::AreEqual(res, right);
+		}
+
 		TEST_METHOD(Mat4RotationZMultiplyVec4)
 		{
 			matrix4f m;
+			matrix4f m2;
+			matrix4f m3;
+
+			matrix4f r1 = m * m2 * m3;
+
+			Assert::AreEqual(r1.is_identity(), true);
 			m.rotation_z(degrees_to_radians(90.0f));
 
 			vector4f v{ 1.0f, 0.0f, 0.0f, 0.0f };
