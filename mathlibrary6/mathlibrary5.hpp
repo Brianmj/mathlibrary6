@@ -360,7 +360,9 @@ namespace knu
 				x(static_cast<T>(0)),
 				y(static_cast<T>(0)),
 				z(static_cast<T>(0)),
-				w(static_cast<T>(1))
+				// Changed the w from 1 in mathlibrary5 to 0 in mathlibrary6.
+				// No longer assuming we want to create a point.
+				w(static_cast<T>(0))
 			{}
 
 			Vec4<T>(T ptr[4])

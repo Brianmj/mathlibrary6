@@ -3,6 +3,7 @@
 
 #include <array>
 #include <iostream>
+#include <vector>
 
 namespace knu {
 	namespace math {
@@ -1690,6 +1691,23 @@ namespace knu {
 				return m;
 			}
 
+			// some utility functions
+			template<typename Point, typename Scalar>
+			Point affine_combination(const std::vector<Point> &p, const std::vector<Scalar> &s)
+			{
+				static_assert(std::is_same<typename Point::value_type, Scalar>::value,
+					"The underlying type of Point is not the same type as Scalar");
+
+				std::vector<Point> r(p.size());
+
+				std::transform(std::begin(p), std::end(p), std::begin(s), std::begin(r),
+					[](const Point &p_, const Scalar &s_)->Point
+				{
+					return p_ * s_;
+				});
+
+				return std::accumulate(std::begin(r), std::end(r), Point());
+			}
 
 		} // namespace of v1
 
