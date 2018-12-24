@@ -408,5 +408,20 @@ namespace UnitTest1
 
 			make_translate<float>(20, 20, 20);
 		}
+
+		TEST_METHOD(AffineCombinationTest)
+		{
+			std::vector<vector4f> points{
+				{4, 2, 0, 1},
+			{-4, -2, 0, 1},
+			{0, -5, 0, 1}
+			};
+
+			std::vector<float> scalars{ 0.2f, 0.5f, 1.0f };
+
+			auto point_combination = affine_combination(points, scalars);
+
+			Assert::AreNotEqual(point_combination, vector4f{ 0.0f, 0.0f, 0.0f, 1.0f });
+		}
 	};
 }
