@@ -16,10 +16,10 @@ namespace knu {
 			const T KNU_PI = static_cast<T>(3.141592653);
 
 			template<typename T>
-			const T DEGREES_TO_RADIANS_CONSTANT = static_cast<T>(3.141592653) / 180;
+			const T KNU_DEGREES_TO_RADIANS_CONSTANT = static_cast<T>(3.141592653) / 180;
 
 			template<typename T>
-			const T RADIANS_TO_DEGREES_CONSTANT = 180 / static_cast<T>(3.141592653);
+			const T KNU_RADIANS_TO_DEGREES_CONSTANT = 180 / static_cast<T>(3.141592653);
 
 			struct vector_component_2 {};
 			struct vector_component_3 {};
@@ -1602,10 +1602,21 @@ namespace knu {
 				std::array<T, MAT_4_4> elements;
 			};	// Matrix4
 
-			template<typename T, typename T2>
-			vec3<T2> operator*(const mat3<T> &m, const vec3<T2> &v)
+			// Math math non member functions
+			template<typename T>
+			vec2<T> operator *(const mat2<T> &m, const vec2<T> &v)
 			{
-				vec3<T2> ret;
+				vec2<T> ret;
+				ret.x = m.get_row_0().dot(v);
+				ret.y = m.get_row_1().dot(v);
+				return ret;
+
+			}
+
+			template<typename T>
+			vec3<T> operator*(const mat3<T> &m, const vec3<T> &v)
+			{
+				vec3<T> ret;
 				ret.x = m.get_row_0().dot(v);
 				ret.y = m.get_row_1().dot(v);
 				ret.z = m.get_row_2().dot(v);
@@ -1636,7 +1647,47 @@ namespace knu {
 			template<typename T>
 			T radians_to_degrees(T radians)
 			{
-				return (radians * RADIANS_TO_DEGREES_CONSTANT<T>);
+				return (radians * KNU_RADIANS_TO_DEGREES_CONSTANT<T>);
+			}
+
+			template<typename T>
+			mat4<T> make_rotation_x(T radians)
+			{
+				mat4<T> m;
+				m.rotation_x(radians);
+				return m;
+			}
+
+			template<typename T>
+			mat4<T> make_rotation_y(T radians)
+			{
+				mat4<T> m;
+				m.rotation_y(radians);
+				return m;
+			}
+
+			template<typename T>
+			mat4<T> make_rotation_z(T radians)
+			{
+				mat4<T> m;
+				m.rotation_z(radians);
+				return m;
+			}
+
+			template<typename T>
+			mat4<T> make_scale(T x, T y, T z)
+			{
+				mat4<T> m;
+				m.scale(x, y, z);
+				return m;
+			}
+
+			template<typename T>
+			mat4<T> make_translate(T x, T y, T z)
+			{
+				mat4<T> m;
+				m.translate(x, y, z);
+				return m;
 			}
 
 
@@ -1722,7 +1773,7 @@ std::wostream &operator <<(std::wostream &wos, const knu::math::vec4<T2> &v)
 template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::mat2<T2> &m)
 {
-	os << m[0] << " " << m[2] << "\n"
+	os  << m[0] << " " << m[2] << "\n"
 		<< m[1] << " " << m[3] << "\n";
 	return os;
 }
@@ -1738,7 +1789,7 @@ std::wostream &operator <<(std::wostream &wos, const knu::math::mat2<T2> &m)
 template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::mat3<T2> &m)
 {
-	os << m[0] << " " << m[3] << " " << m[6] << "\n"
+	os  << m[0] << " " << m[3] << " " << m[6] << "\n"
 		<< m[1] << " " << m[4] << " " << m[7] << "\n"
 		<< m[2] << " " << m[5] << " " << m[8] << "\n";
 	return os;
@@ -1756,7 +1807,7 @@ std::wostream &operator <<(std::wostream &wos, const knu::math::mat3<T2> &m)
 template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::mat4<T2> &m)
 {
-	os << m[0] << " " << m[4] << " " << m[8] << " " << m[12] << "\n"
+	os  << m[0] << " " << m[4] << " " << m[8] << " " << m[12] << "\n"
 		<< m[1] << " " << m[5] << " " << m[9] << " " << m[13] << "\n"
 		<< m[2] << " " << m[6] << " " << m[10] << " " << m[14] << "\n"
 		<< m[3] << " " << m[7] << " " << m[11] << " " << m[15] << "\n";

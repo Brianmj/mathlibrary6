@@ -397,5 +397,16 @@ namespace UnitTest1
 			//Assert::AreEqual(res, wrong);
 			Assert::AreEqual(res, right);
 		}
+
+		TEST_METHOD(MakeMatrices)
+		{
+			make_rotation_x<float>(44.3f);
+			make_rotation_y<float>(30.0f);
+			make_rotation_z<float>(20.0f);
+
+			make_scale<float>(1, 1, 1);
+
+			make_translate<float>(20, 20, 20);
+		}
 	};
 }
