@@ -1745,8 +1745,6 @@ namespace knu {
 	} // namespace math
 } // namespace knu
 
-
-
 template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::vec2<T2> &v)
 {
@@ -1843,7 +1841,5 @@ std::wostream &operator <<(std::wostream &wos, const knu::math::mat4<T2> &m)
 		<< m[3] << " " << m[7] << " " << m[11] << " " << m[15] << "\n";
 	return wos;
 }
-
-
 
 #endif // KNU_MATHLIBRARY6_HPP
