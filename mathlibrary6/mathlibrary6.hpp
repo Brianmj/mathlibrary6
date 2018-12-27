@@ -762,7 +762,7 @@ namespace knu {
 				}
 
 				
-				static mat2 identity()
+				static mat2 identity_matrix()
 				{
 					mat2 res(static_cast<T>(1), static_cast<T>(0),
 						static_cast<T>(0), static_cast<T>(1));
@@ -770,7 +770,7 @@ namespace knu {
 					return res;
 				}
 
-				static mat2 zero() 
+				static mat2 zero_matrix() 
 				{
 					mat2 res;
 					std::fill(std::begin(res.elements), std::end(res.elements),
@@ -824,15 +824,6 @@ namespace knu {
 					return res;
 				}    
 
-				mat2 transpose() const 
-				{
-					auto row0 = get_row_0();
-					auto row1 = get_row_1();
-					mat2 res(row0.x, row0.y, row1.x, row1.y);
-
-					return res;
-				}
-
 				static mat2 rotation_matrix_z(T radians)
 				{
 					T c = cos(radians);
@@ -841,6 +832,15 @@ namespace knu {
 					mat2 res(c, s, -s, c);
 					
 					return res;
+				}
+
+				mat2 transpose() const
+				{
+					auto row0 = get_row_0();
+					auto row1 = get_row_1();
+
+					return mat2(row0.x, row0.y,
+						row1.x, row1.y);
 				}
 
 				T* data()
@@ -859,7 +859,7 @@ namespace knu {
 
 				mat3():elements()
 				{
-					*this = identity();
+					*this = identity_matrix();
 				}
 
 				// column major
@@ -1096,7 +1096,7 @@ namespace knu {
 					return *this;
 				}*/
 
-				static mat3 identity() 
+				static mat3 identity_matrix() 
 				{
 					mat3 res(1, 0, 0,
 						0, 1, 0,
@@ -1116,7 +1116,7 @@ namespace knu {
 						get_row_2() == r2;
 				}
 
-				static mat3 zero()
+				static mat3 zero_matrix()
 				{
 					mat3 res;
 					std::fill(std::begin(res.elements), std::end(res.elements),
@@ -1132,21 +1132,6 @@ namespace knu {
 
 					return res;
 				}
-
-				mat3 transpose() const
-				{
-					auto row0 = get_row_0();
-					auto row1 = get_row_1();
-					auto row2 = get_row_2();
-
-					mat3 res;
-					res = res.set_column_0(row0);
-					res = res.set_column_1(row1);
-					res = res.set_column_2(row2);
-
-					return res;
-				}
-
 
 				static mat3 rotation_x_matrix(T radians)
 				{
@@ -1185,6 +1170,17 @@ namespace knu {
 					return res;
 				}
 
+				mat3 transpose() const
+				{
+					auto row0 = get_row_0();
+					auto row1 = get_row_1();
+					auto row2 = get_row_2();
+
+					return mat3(	row0.x, row0.y, row0.z,
+									row1.x, row1.y, row1.z,
+									row2.x, row2.y, row2.z);
+				}
+
 				T* data()
 				{
 					return &elements[0];
@@ -1202,7 +1198,7 @@ namespace knu {
 
 				mat4():elements()
 				{
-					set_identity();
+					*this = identity_matrix();
 				}
 
 				mat4(T a, T b, T c, T d, T e, T f, T g, T h, T i, T j, T k, T l, T m, T n, T o, T p)
@@ -1294,57 +1290,65 @@ namespace knu {
 					return vec4<T>(elements[3], elements[7], elements[11], elements[15]);
 				}
 
-				void set_row_0(T x, T y, T z, T w)
+				mat4 set_row_0(T x, T y, T z, T w) const
 				{
-					elements[0] = x;
-					elements[4] = y;
-					elements[8] = z;
-					elements[12] = w;
+					mat4 res(*this);
+					res[0] = x;
+					res[4] = y;
+					res[8] = z;
+					res[12] = w;
+
+					return res;
 				}
 
 
-				void set_row_0(const vec4<T> &v)
+				mat4 set_row_0(const vec4<T> &v) const
 				{
-					set_row_0(v.x, v.y, v.z, v.w);
+					return set_row_0(v.x, v.y, v.z, v.w);
 				}
 
-				void set_row_1(T x, T y, T z, T w)
+				mat4 set_row_1(T x, T y, T z, T w) const
 				{
-					elements[1] = x;
-					elements[5] = y;
-					elements[9] = z;
-					elements[13] = w;
+					mat4 res(*this);
+					res[1] = x;
+					res[5] = y;
+					res[9] = z;
+					res[13] = w;
+
+					return res;
 				}
 
-				void set_row_1(const vec4<T> &v)
+				mat4 set_row_1(const vec4<T> &v) const
 				{
-					set_row_1(v.x, v.y, v.z, v.w);
+					return set_row_1(v.x, v.y, v.z, v.w);
 				}
 
-				void set_row_2(T x, T y, T z, T w)
+				mat4 set_row_2(T x, T y, T z, T w) const
 				{
-					elements[2] = x;
-					elements[6] = y;
-					elements[10] = z;
-					elements[14] = w;
+					mat4 res(*this);
+					res[2] = x;
+					res[6] = y;
+					res[10] = z;
+					res[14] = w;
 				}
 
-				void set_row_2(const vec4<T> &v)
+				mat4 set_row_2(const vec4<T> &v) const
 				{
-					set_row_2(v.x, v.y, v.z, v.w);
+					return set_row_2(v.x, v.y, v.z, v.w);
 				}
 
-				void set_row_3(T x, T y, T z, T w)
+				mat4 set_row_3(T x, T y, T z, T w) const
 				{
-					elements[3] = x;
-					elements[7] = y;
-					elements[11] = z;
-					elements[15] = w;
+					mat4 res(*this);
+					res[3] = x;
+					res[7] = y;
+					res[11] = z;
+					res[15] = w;
 				}
 
-				void set_row_3(const vec4<T> &v)
+				mat4 set_row_3(const vec4<T> &v) const
 				{
-					set_row_3(v.x, v.y, v.z, v.w);
+					return set_row_3(v.x, v.y, v.z, v.w);
 				}
 
 				vec4<T> get_column_0()const
@@ -1367,59 +1371,69 @@ namespace knu {
 					return vec4<T>(elements[12], elements[13], elements[14], elements[15]);
 				}
 
-				void set_column_0(T x, T y, T z, T w)
+				mat4 set_column_0(T x, T y, T z, T w) const
 				{
-					elements[0] = x;
-					elements[1] = y;
-					elements[2] = z;
-					elements[3] = w;
+					mat4 res(*this);
+					res[0] = x;
+					res[1] = y;
+					res[2] = z;
+					res[3] = w;
 				}
 
-				void set_column_0(const vec4<T> &v)
+				mat4 set_column_0(const vec4<T> &v) const
 				{
-					set_column_0(v.x, v.y, v.z, v.w);
+					return set_column_0(v.x, v.y, v.z, v.w);
 				}
 
-				void set_column_1(T x, T y, T z, T w)
+				mat4 set_column_1(T x, T y, T z, T w) const
 				{
-					elements[4] = x;
-					elements[5] = y;
-					elements[6] = z;
-					elements[7] = w;
+					mat4 res(*this);
+					res[4] = x;
+					res[5] = y;
+					res[6] = z;
+					res[7] = w;
+
+					return res;
 				}
 
-				void set_column_1(const vec4<T> &v)
+				mat4 set_column_1(const vec4<T> &v) const
 				{
-					set_column_1(v.x, v.y, v.z, v.w);
+					return set_column_1(v.x, v.y, v.z, v.w);
 				}
 
-				void set_column_2(T x, T y, T z, T w)
+				mat4 set_column_2(T x, T y, T z, T w) const
 				{
-					elements[8] = x;
-					elements[9] = y;
-					elements[10] = z;
-					elements[11] = w;
+					mat4 res(*this);
+					res[8] = x;
+					res[9] = y;
+					res[10] = z;
+					res[11] = w;
+
+					return res;
 				}
 
-				void set_column_2(const vec4<T> &v)
+				mat4 set_column_2(const vec4<T> &v) const
 				{
-					set_column_2(v.x, v.y, v.z, v.w);
+					return set_column_2(v.x, v.y, v.z, v.w);
 				}
 
-				void set_column_3(T x, T y, T z, T w)
+				mat4 set_column_3(T x, T y, T z, T w) const
 				{
-					elements[12] = x;
-					elements[13] = y;
-					elements[14] = z;
-					elements[15] = w;
+					mat4 res(*this);
+					res[12] = x;
+					res[13] = y;
+					res[14] = z;
+					res[15] = w;
+
+					return res;
 				}
 
-				void set_column_3(const vec4<T> &v)
+				mat4 set_column_3(const vec4<T> &v) const
 				{
-					set_column_3(v.x, v.y, v.z, v.w);
+					return set_column_3(v.x, v.y, v.z, v.w);
 				}
 
-				mat4<T> operator+(const mat4<T> &m)const
+				mat4<T> operator+(const mat4<T> &m) const
 				{
 					mat4<T> ret(elements[0] + m.elements[0],
 						elements[1] + m.elements[1],
@@ -1441,11 +1455,11 @@ namespace knu {
 					return ret;
 				}
 
-				mat4 &operator +=(const mat4 &m)
+				/*mat4 &operator +=(const mat4 &m)
 				{
 					*this = *this + m;
 					return *this;
-				}
+				}*/
 
 				mat4 operator-(const mat4 &m)const
 				{
@@ -1469,28 +1483,29 @@ namespace knu {
 					return ret;
 				}
 
-				template<typename T2>
+				/*template<typename T2>
 				mat4<T> &operator -=(const mat4<T2> &m)
 				{
 					*this = *this - m;
 					return *this;
-				}
+				}*/
 
-				mat4<T> operator*(double scalar)const
+				mat4 operator*(T scalar) const
 				{
-					mat4<T> ret;
+					mat4 ret;
 
 					std::transform(std::begin(elements), std::end(elements), std::begin(ret.elements),
 						[=](T val) {
-						return (scalar * val);
+						return (val * scalar);
 					});
+
 					return ret;
 				}
 
 
-				mat4 operator*(const mat4 &m)const
+				mat4 operator*(const mat4 &m) const
 				{
-					mat4<T> ret;
+					mat4 ret;
 
 					ret[0] = get_row_0().dot(m.get_column_0());
 					ret[4] = get_row_0().dot(m.get_column_1());
@@ -1515,101 +1530,21 @@ namespace knu {
 					return ret;
 				}
 
-				template<typename T2>
+				/*template<typename T2>
 				mat4<T> &operator*=(const mat4<T2> &m)
 				{
 					*this = *this * m;
 					return *this;
-				}
+				}*/
 
-				mat4<T>& translate(T x, T y, T z)
+				static mat4 identity_matrix()
 				{
-					set_column_0(vec4<T>(T(1.0f), T(0.0f), T(0.0f), T(0.0f)));
-					set_column_1(vec4<T>(T(0.0f), T(1.0f), T(0.0f), T(0.0f)));
-					set_column_2(vec4<T>(T(0.0f), T(0.0f), T(1.0f), T(0.0f)));
-					set_column_3(vec4<T>(x, y, z, T(1.0f)));
+					mat4 res(1, 0, 0, 0,
+						0, 1, 0, 0,
+						0, 0, 1, 0,
+						0, 0, 0, 1);
 
-					return *this;
-				}
-
-				mat4 &translate(const vec4<T> &v)
-				{
-					translate(v.x, v.y, v.z);
-					return *this;
-				}
-
-				mat4 &rotation_x(T radians)
-				{
-					T c = cos(radians);
-					T s = sin(radians);
-
-					set_row_0(1, 0, 0, 0);
-					set_row_1(0, c, s, 0);
-					set_row_2(0, -s, c, 0);
-					set_row_3(0, 0, 0, 1);
-
-					return *this;
-				}
-
-				mat4 &rotation_y(T radians)
-				{
-					T c = cos(radians);
-					T s = sin(radians);
-
-					set_row_0(c, 0, -s, 0);
-					set_row_1(0, 1, 0, 0);
-					set_row_2(s, 0, c, 0);
-					set_row_3(0, 0, 0, 1);
-
-					return *this;
-				}
-
-				mat4 &rotation_z(T radians)
-				{
-					T c = cos(radians);
-					T s = sin(radians);
-
-					set_row_0(c, -s, 0, 0);
-					set_row_1(s, c, 0, 0);
-					set_row_2(0, 0, 1, 0);
-					set_row_3(0, 0, 0, 1);
-
-					return *this;
-				}
-
-				mat4 &scale(T x, T y, T z)
-				{
-					set_row_0(x, 0, 0, 0);
-					set_row_1(0, y, 0, 0);
-					set_row_2(0, 0, z, 0);
-					set_row_3(0, 0, 0, 1);
-
-					return *this;
-				}
-
-				mat4 &transpose()
-				{
-					auto row0 = get_row_0();
-					auto row1 = get_row_1();
-					auto row2 = get_row_2();
-					auto row3 = get_row_3();
-
-					set_column_0(row0);
-					set_column_1(row1);
-					set_column_2(row2);
-					set_column_3(row3);
-
-					return *this;
-				}
-
-				mat4 &set_identity()
-				{
-					set_row_0(1, 0, 0, 0);
-					set_row_1(0, 1, 0, 0);
-					set_row_2(0, 0, 1, 0);
-					set_row_3(0, 0, 0, 1);
-
-					return *this;
+					return res;
 				}
 
 				bool is_identity() const
@@ -1626,25 +1561,105 @@ namespace knu {
 						get_row_3() == r3;
 				}
 
-				mat4 &zero()
+				static mat4 zero_matrix()
 				{
-					std::fill(std::begin(elements), std::end(elements), 0);
-					return *this;
+					mat4 res;
+					std::fill(std::begin(res.elements), std::end(res.elements), 0);
+					return res;
 				}
 
-				mat3<T> make_3x3()const
+				static mat4 rotation_matrix_x(T radians)
+				{
+					T c = cos(radians);
+					T s = sin(radians);
+
+					mat4 res(	1, 0, 0, 0,
+								0, c, -s, 0,
+								0, s, c, 0,
+								0, 0, 0, 1);
+
+					return res;
+				}
+
+				static mat4 rotation_matrix_y(T radians)
+				{
+					T c = cos(radians);
+					T s = sin(radians);
+
+					mat4 res(	c, 0, s, 0,
+								0, 1, 0, 0,
+								-s, 0, c, 0,
+								0, 0, 0, 1);
+
+					return res;
+				}
+
+				static mat4 rotation_matrix_z(T radians)
+				{
+					T c = cos(radians);
+					T s = sin(radians);
+
+					mat4 res(	c, s, 0, 0,
+								-s, c, 0, 0,
+								0, 0, 1, 0,
+								0, 0, 0, 1);
+
+					return res;
+				}
+
+				static mat4 scale_matrix(T x, T y, T z)
+				{
+					mat4 res(	x, 0, 0, 0,
+								0, y, 0, 0,
+								0, 0, z, 0,
+								0, 0, 0, 1);
+
+					return res;
+				}
+
+				static mat4 translation_matrix(T x, T y, T z)
+				{
+					mat4 res(1, 0, 0, 0,
+						0, 1, 0, 0,
+						0, 0, 1, 0,
+						x, y, z, 1);
+
+					return res;
+				}
+
+				static mat4 translation_matrix(const vec4<T> &v)
+				{
+					return translation_matrix(v.x, v.y, v.z);
+				}
+
+				mat4 transpose() const
+				{
+					auto row0 = get_row_0();
+					auto row1 = get_row_1();
+					auto row2 = get_row_2();
+					auto row3 = get_row_3();
+
+					mat4 res(row0.x, row0.y, row0.z, row0.w,
+						row1.x, row1.y, row1.z, row1.w,
+						row2.x, row2.y, row2.z, row2.w,
+						row3.x, row3.y, row3.z, row3.w);
+
+					return res;
+				}
+
+				mat3<T> make_3x3() const
 				{
 					mat3<T> m;
 					vec4<T> v;
 
 					v = get_row_0();
-					m.set_row_0(v.x, v.y, v.z);
+					m = m.set_row_0(v.x, v.y, v.z);
 
 					v = get_row_1();
-					m.set_row_1(v.x, v.y, v.z);
+					m = m.set_row_1(v.x, v.y, v.z);
 
 					v = get_row_2();
-					m.set_row_2(v.x, v.y, v.z);
+					m = m.set_row_2(v.x, v.y, v.z);
 
 					return m;
 				}
@@ -1706,7 +1721,7 @@ namespace knu {
 				return (radians * KNU_RADIANS_TO_DEGREES_CONSTANT<T>);
 			}
 
-			template<typename T>
+			/*template<typename T>
 			mat4<T> make_rotation_x(T radians)
 			{
 				mat4<T> m;
@@ -1744,7 +1759,7 @@ namespace knu {
 				mat4<T> m;
 				m.translate(x, y, z);
 				return m;
-			}
+			}*/
 
 			// some utility functions
 			template<typename Point, typename Scalar>

@@ -74,7 +74,7 @@ namespace UnitTest1
 		{
 			mat2<float> m1;
 
-			m1 = mat2<float>::identity();
+			m1 = mat2<float>::identity_matrix();
 
 			mat2<float> m2(1, 0, 1, 0);
 			mat2<float> m3;		// default constructed to identity
@@ -88,7 +88,7 @@ namespace UnitTest1
 			matrix2f m1;
 			matrix2f m2;
 
-			auto res = matrix2f::zero();
+			auto res = matrix2f::zero_matrix();
 			m2 = matrix2f{ 0, 0, 0, 0 };
 			Assert::AreEqual(res, m2, L"They should both have all zero elements");
 		}
@@ -225,7 +225,7 @@ namespace UnitTest1
 			//Assert::AreEqual(m1.is_identity(), true);
 			Assert::AreEqual(m2.is_identity(), true);
 
-			m1 = matrix3f::identity();
+			m1 = matrix3f::identity_matrix();
 			Assert::AreEqual(m2, m1);
 		}
 
@@ -306,7 +306,7 @@ namespace UnitTest1
 			matrix4f m2(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 
 			//Assert::AreEqual(m1, m2);
-			m2.set_identity();
+			m2 = m2.identity_matrix();
 			Assert::AreEqual(m1, m2);
 			Assert::AreEqual(m1.is_identity(), true);
 			m2.elements[5] = 4;
@@ -344,7 +344,7 @@ namespace UnitTest1
 		TEST_METHOD(Mat4TranslationAndVectorMultiply)
 		{
 			matrix4i translation;
-			translation.translate(4, 5, 6);
+			translation = matrix4i::translation_matrix(4, 5, 6);
 
 			vector4i point(0, 0, 0, 1);
 
@@ -353,6 +353,7 @@ namespace UnitTest1
 			vector4i wrong = { 0, 0, 0, 1 };
 			vector4i right = { 4, 5, 6, 1 };
 
+			//Assert::AreEqual(res, wrong);
 			Assert::AreEqual(res, right);
 		}
 
@@ -380,7 +381,7 @@ namespace UnitTest1
 			matrix4f r1 = m * m2 * m3;
 
 			Assert::AreEqual(r1.is_identity(), true);
-			m.rotation_z(degrees_to_radians(90.0f));
+			m = matrix4f::rotation_matrix_z(degrees_to_radians(90.0f));
 
 			vector4f v{ 1.0f, 0.0f, 0.0f, 0.0f };
 
@@ -395,13 +396,13 @@ namespace UnitTest1
 
 		TEST_METHOD(MakeMatrices)
 		{
-			make_rotation_x<float>(44.3f);
-			make_rotation_y<float>(30.0f);
-			make_rotation_z<float>(20.0f);
+			matrix4f::rotation_matrix_x(44.3f);
+			matrix4f::rotation_matrix_y(30.0f);
+			matrix4f::rotation_matrix_z(20.0f);
 
-			make_scale<float>(1, 1, 1);
+			matrix4f::scale_matrix(1, 1, 1);
 
-			make_translate<float>(20, 20, 20);
+			matrix4f::translation_matrix(20, 20, 20);
 		}
 
 		TEST_METHOD(AffineCombinationTest)
