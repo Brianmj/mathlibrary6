@@ -10,6 +10,9 @@ namespace knu {
 	namespace math {
 		inline namespace v1 {
 
+			// Going to change the whole library to have a more functional interface
+			// no longer modifying values
+
 			template<typename T>
 			const T KNU_EPSILON = static_cast<T>(0.000001);
 
