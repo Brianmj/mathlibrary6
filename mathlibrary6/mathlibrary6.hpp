@@ -77,6 +77,11 @@ namespace knu {
 					std::cout << "rvalue reference called\n";
 				}
 
+				vec2 operator -() const
+				{
+					return vec2(-x, -y);
+				}
+
 				vec2 &operator =(const vec2 &v)
 				{
 					x = v.x;
@@ -110,26 +115,26 @@ namespace knu {
 
 				}
 
-				vec2 &operator +=(const vec2 &v)
+				/*vec2 &operator +=(const vec2 &v)
 				{
 					x += v.x;
 					y += v.y;
 
 					return (*this);
-				}
+				}*/
 
 				vec2<T> operator -(const vec2 &v)const
 				{
 					return (vec2(x - v.x, y - v.y));
 				}
 
-				vec2<T> &operator -=(const vec2 &v)
+				/*vec2<T> &operator -=(const vec2 &v)
 				{
 					x -= v.x;
 					y -= v.y;
 
 					return (*this);
-				}
+				}*/
 
 
 				vec2 operator *(T scalar)const
@@ -137,51 +142,48 @@ namespace knu {
 					return (vec2(x * scalar, y * scalar));
 				}
 
-				vec2 &operator *=(T scalar)
+				/*vec2 &operator *=(T scalar)
 				{
 					x *= scalar;
 					y *= scalar;
 
 					return (*this);
-				}
+				}*/
 
 				vec2 operator /(T scalar)const
 				{
 					return (vec2<T>(x / scalar, y / scalar));
 				}
 
-				vec2 &operator /=(T scalar)
+				/*vec2 &operator /=(T scalar)
 				{
 					x /= scalar;
 					y /= scalar;
 
 					return (*this);
-				}
+				}*/
 
-				float length()const
+				T length()const
 				{
 					return (sqrt((x * x) + (y * y)));
 				}
 
-				float length_squared()const
+				T length_squared()const
 				{
 					return ((x * x) + (y * y));
 				}
 
-				vec2& normalize()
+				vec2 normalized() const
 				{
 					if (is_zero())
 						return (*this);
 
 					T length_ = length();
 
-					x /= length_;
-					y /= length_;
-
-					return (*this);
+					return vec2(x / length_, y / length_);
 				}
 
-				bool is_zero()const
+				bool is_zero() const
 				{
 					if (((x - static_cast<T>(0)) < KNU_EPSILON<T>) && 
 						((y - static_cast<T>(0)) < KNU_EPSILON<T>))
@@ -190,21 +192,22 @@ namespace knu {
 					return (false);
 				}
 
-				T dot(const vec2 &v)const
+				T dot(const vec2 &v) const
 				{
 					return ((x * v.x) + (y * v.y));
 				}
 
-				void zero()
+				template<typename T2>
+				static vec2<T2> zero() 
 				{
-					x = y = static_cast<T>(0);
+					return vec2<T2>(static_cast<T2>(0), static_cast<T2>(0));
 				}
 
-				void set(T x_, T y_)
+				/*void set(T x_, T y_)
 				{
 					x = x_;
 					y = y_;
-				}
+				}*/
 
 				T x, y;
 			};			// Class Vec2
@@ -254,7 +257,7 @@ namespace knu {
 					std::cout << "rvalue reference called\n";
 				}
 
-				vec3<T> operator -()const
+				vec3<T> operator -() const
 				{
 					return vec3<T>(-x, -y, -z);
 				}
@@ -290,83 +293,78 @@ namespace knu {
 					return (vec3(x + v.x, y + v.y, z + v.z));
 				}
 
-	
-				vec3& operator +=(const vec3 &v)
+				/*vec3& operator +=(const vec3 &v)
 				{
 					x += v.x;
 					y += v.y;
 					z += v.z;
 
 					return (*this);
-				}
+				}*/
 
-	
 				const vec3 operator -(const vec3 &v)const
 				{
 					return (vec3(x - v.x, y - v.y, z - v.z));
 				}
 
-				vec3 &operator -=(const vec3 &v)
+				/*vec3 &operator -=(const vec3 &v)
 				{
 					x -= v.x;
 					y -= v.y;
 					z -= v.z;
 
 					return (*this);
-				}
+				}*/
 
 				const vec3 operator *(T scalar)const
 				{
 					return (vec3(x * scalar, y * scalar, z * scalar));
 				}
 
-				vec3& operator *=(T scalar)
+				/*vec3& operator *=(T scalar)
 				{
 					x *= scalar;
 					y *= scalar;
 					z *= scalar;
 
 					return (*this);
-				}
+				}*/
 
 				const vec3 operator /(T scalar)const
 				{
 					return (vec3(x / scalar, y / scalar, z / scalar));
 				}
 
-				vec3& operator /=(T scalar)
+				/*vec3& operator /=(T scalar)
 				{
 					x /= scalar;
 					y /= scalar;
 					z /= scalar;
 
 					return (*this);
-				}
+				}*/
 
-				T length()const
+				T length() const
 				{
 					return (sqrt((x * x) + (y * y) + (z * z)));
 				}
 
-				T length_squared()const
+				T length_squared() const
 				{
 					return ((x * x) + (y * y) + (z * z));
 				}
 
-				vec3& normalize()
+				vec3 normalized() const
 				{
 					if (is_zero())
 						return (*this);
 
-					T length_ = length();
-					x /= length_;
-					y /= length_;
-					z /= length_;
+					T len = length();
 
-					return (*this);
+					return vec3(x / len, y / len, z / len);
 				}
 
-				bool is_zero()const
+				bool is_zero() const
 				{
 					if (((x - static_cast<T>(0)) < KNU_EPSILON<T>) &&
 						((y - static_cast<T>(0)) < KNU_EPSILON<T>) &&
@@ -376,27 +374,33 @@ namespace knu {
 					return (false);
 				}
 
-				T dot(const vec3 &v)const
+				T dot(const vec3 &v) const
 				{
 					return ((x * v.x) + (y * v.y) + (z * v.z));
 				}
 
-				vec3<T> cross(const vec3 &v)const
+				vec3<T> cross(const vec3 &v) const
 				{
 					return (vec3(((y * v.z) - (z * v.y)), ((z * v.x) - (x * v.z)), ((x * v.y) - (y * v.x))));
 				}
 
-				void zero()
+				/*void zero()
 				{
 					x = y = z = static_cast<T>(0);
+				}*/
+
+				template<typename T2>
+				static vec3<T2> zero()
+				{
+					return vec3<T2>(static_cast<T2>(0), static_cast<T2>(0), static_cast<T2>(0));
 				}
 
-				void set(T x_, T y_, T z_)
+				/*void set(T x_, T y_, T z_)
 				{
 					x = x_;
 					y = y_;
 					z = z_;
-				}
+				}*/
 
 				vec2<T> get_vec2() const
 				{
@@ -420,7 +424,7 @@ namespace knu {
 					x(static_cast<T>(0)),
 					y(static_cast<T>(0)),
 					z(static_cast<T>(0)),
-					w(static_cast<T>(1))
+					w(static_cast<T>(0))
 				{}
 
 				vec4(T x_, T y_, T z_, T w_)
@@ -462,7 +466,7 @@ namespace knu {
 					std::cout << "rvalue reference called for v4\n";
 				}
 
-				vec4<T> operator -()const
+				vec4<T> operator -() const
 				{
 					return vec4(-x, -y, -z, -w);
 				}
@@ -501,7 +505,7 @@ namespace knu {
 					return (vec4(x + v.x, y + v.y, z + v.z, w + v.w));
 				}
 
-				vec4& operator +=(const vec4 &v)
+				/*vec4& operator +=(const vec4 &v)
 				{
 					x += v.x;
 					y += v.y;
@@ -509,14 +513,14 @@ namespace knu {
 					w += v.w;
 
 					return (*this);
-				}
+				}*/
 
 				vec4 operator -(const vec4 &v)const
 				{
 					return (vec4(x - v.x, y - v.y, z - v.z, w - v.w));
 				}
 
-				vec4& operator -=(const vec4 &v)
+				/*vec4& operator -=(const vec4 &v)
 				{
 					x -= v.x;
 					y -= v.y;
@@ -524,14 +528,14 @@ namespace knu {
 					w -= v.w;
 
 					return (*this);
-				}
+				}*/
 
 				vec4 operator *(T scalar)const
 				{
 					return (vec4(x * scalar, y * scalar, z * scalar, w * scalar));
 				}
 
-				vec4& operator *=(T scalar)
+				/*vec4& operator *=(T scalar)
 				{
 					x *= scalar;
 					y *= scalar;
@@ -539,14 +543,14 @@ namespace knu {
 					w *= scalar;
 
 					return (*this);
-				}
+				}*/
 
 				vec4 operator /(T scalar)const
 				{
 					return (vec4(x / scalar, y / scalar, z / scalar, w / scalar));
 				}
 
-				vec4& operator /=(T scalar)
+				/*vec4& operator /=(T scalar)
 				{
 					x /= scalar;
 					y /= scalar;
@@ -554,31 +558,26 @@ namespace knu {
 					w /= scalar;
 
 					return (*this);
-				}
+				}*/
 
-				T length()const
+				T length() const
 				{
 					return (sqrt((x * x) + (y * y) + (z * z))); // removed w as it shouldn't contribute to length
 				}
 
-				T length_squared()const
+				T length_squared() const
 				{
 					return ((x * x) + (y * y) + (z * z));   // removed w as it shouldn't contribute to length_squared
 				}
 
-				vec4<T>& normalize()
+				vec4 normalized() const
 				{
 					if (is_zero())
 						return (*this);
 
-					T length_ = length();
+					T len = length();
 
-					x /= length_;
-					y /= length_;
-					z /= length_;
-					// w /= length_;    // doesn't need to be normalized
-
-					return (*this);
+					return vec4(x / len, y / len, z / len, w / len);
 				}
 
 				bool is_zero()const
@@ -597,18 +596,25 @@ namespace knu {
 					return ((x * v.x) + (y * v.y) + (z * v.z) + (w * v.w));
 				}
 
-				void zero()
+				/*void zero()
 				{
 					x = y = z = w = static_cast<T>(0);
+				}*/
+
+				template<typename T2>
+				static vec4<T2> zero()
+				{
+					return vec4<T2>(static_cast<T2>(0), static_cast<T2>(0), static_cast<T2>(0),
+						static_cast<T2>(0));
 				}
 
-				void set(T x_, T y_, T z_, T w_)
+				/*void set(T x_, T y_, T z_, T w_)
 				{
 					x = x_;
 					y = y_;
 					z = z_;
 					w = w_;
-				}
+				}*/
 
 				vec3<T> get_vec3() const
 				{
@@ -626,7 +632,11 @@ namespace knu {
 				mat2<T>() :
 					elements()
 				{
-					set_identity();
+					// set to identity (column major
+					elements[0] = 1;
+					elements[1] = 0;
+					elements[2] = 0;
+					elements[3] = 1;
 				}
 
 				// column major
@@ -670,41 +680,47 @@ namespace knu {
 					return elements[i];
 				}
 
-				T operator [](int i)const
+				T operator [](int i) const
 				{
 					return elements[i];
 				}
 
-				vec2<T> get_row_0()const
+				vec2<T> get_row_0() const
 				{
 					return vec2<T>(elements[0], elements[2]);
 				}
 
-				vec2<T> get_row_1()const
+				vec2<T> get_row_1() const
 				{
 					return vec2<T>(elements[1], elements[3]);
 				}
 
-				void set_row_0(T a, T b)
+				mat2 set_row_0(T a, T b) const 
 				{
-					elements[0] = a;
-					elements[2] = b;
+					mat2 res(*this);
+					res[0] = a;
+					res[2] = b;
+
+					return res;
 				}
 
-				void set_row_0(const vec2<T> &v)
+				mat2 set_row_0(const vec2<T> &v) const
 				{
-					set_row_0(v.x, v.y);
+					return set_row_0(v.x, v.y);
 				}
 
-				void set_row_1(T a, T b)
+				mat2 set_row_1(T a, T b) const
 				{
-					elements[1] = a;
-					elements[3] = b;
+					mat2 res(*this);
+					res[1] = a;
+					res[3] = b;
+
+					return res;
 				}
 
-				void set_row_1(const vec2<T> &v)
+				mat2 set_row_1(const vec2<T> &v) const
 				{
-					set_row_1(v.x, v.y);
+					return set_row_1(v.x, v.y);
 				}
 
 				vec2<T> get_column_0()const
@@ -717,43 +733,52 @@ namespace knu {
 					return vec2<T>(elements[2], elements[3]);
 				}
 
-				void set_column_0(T a, T b)
+				mat2 set_column_0(T a, T b) const
 				{
-					elements[0] = a;
-					elements[1] = b;
+					mat2 res(*this);
+					res[0] = a;
+					res[1] = b;
+
+					return res;
 				}
 
-				void set_column_0(const vec2<T> &v)
+				mat2 set_column_0(const vec2<T> &v) const
 				{
-					set_column_0(v.x, v.y);
+					return set_column_0(v.x, v.y);
 				}
 
-				void set_column_1(T a, T b)
+				mat2 set_column_1(T a, T b) const
 				{
-					elements[2] = a;
-					elements[3] = b;
+					mat2 res(*this);
+					res[2] = a;
+					res[3] = b;
+
+					return res;
 				}
 
-				void set_column_1(const vec2<T> &v)
+				mat2 set_column_1(const vec2<T> &v) const
 				{
 					set_column_1(v.x, v.y);
 				}
 
-				mat2 &set_identity()
+				mat2 set_identity() const
 				{
-					set_row_0(1, 0);
-					set_row_1(0, 1);
-					return *this;
+					mat2 res(static_cast<T>(1), static_cast<T>(0),
+						static_cast<T>(0), static_cast<T>(1));
+
+					return res;
 				}
 
-				mat2 &zero()
+				template<typename T2>
+				static mat2<T2> zero(T2) 
 				{
-					std::fill(std::begin(elements), std::end(elements),
-						static_cast<T>(0));
-					return *this;
+					mat2<T2> res;
+					std::fill(std::begin(res.elements), std::end(res.elements),
+						static_cast<T2>(0));
+					return res;
 				}
 
-				mat2 operator+(const mat2 &m)const
+				mat2 operator+(const mat2 &m) const
 				{
 					return mat2(elements[0] + m.elements[0],
 						elements[1] + m.elements[1],
@@ -761,11 +786,11 @@ namespace knu {
 						elements[3] + m.elements[3]);
 				}
 
-				mat2 &operator+=(const mat2 &m)
+				/*mat2 &operator+=(const mat2 &m)
 				{
 					*this = *this + m;
 					return *this;
-				}
+				}*/
 
 				mat2 operator-(const mat2 &m)const
 				{
@@ -775,11 +800,11 @@ namespace knu {
 						elements[3] - m.elements[3]);
 				}
 
-				mat2 &operator-=(const mat2 &m)
+				/*mat2 &operator-=(const mat2 &m)
 				{
 					*this = *this - m;
 					return *this;
-				}
+				}*/
 
 				mat2 operator*(const mat2 &m)const
 				{
@@ -792,30 +817,30 @@ namespace knu {
 					return ret;
 				}
 
-				mat2 &scale(T x, T y)
+				mat2 scale(T x, T y) const
 				{
-					set_row_0(x, 0);
-					set_row_1(0, y);
-					return *this;
-				}
-				mat2 &transpose()
+					mat2 res(x, 0, 0, y);
+
+					return res;
+				}    
+
+				mat2 transpose() const 
 				{
 					auto row0 = get_row_0();
 					auto row1 = get_row_1();
-					set_column_0(row0);
-					set_column_1(row1);
+					mat2 res(row0.x, row0.y, row1.x, row1.y);
 
-					return *this;
+					return res;
 				}
 
-				mat2 &rotation_z(T radians)
+				mat2 rotation_z(T radians) const
 				{
 					T c = cos(radians);
 					T s = sin(radians);
 
-					set_row_0(c, -s);
-					set_row_1(s, c);
-					return *this;
+					mat2 res(c, s, -s, c);
+					
+					return res;
 				}
 
 				T* data()

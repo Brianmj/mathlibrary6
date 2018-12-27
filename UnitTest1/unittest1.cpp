@@ -88,9 +88,9 @@ namespace UnitTest1
 			matrix2f m1;
 			matrix2f m2;
 
-			m1.zero();
+			auto res = matrix2f::zero(0.0f);
 			m2 = matrix2f{ 0, 0, 0, 0 };
-			Assert::AreEqual(m1, m2, L"They should both have all zero elements");
+			Assert::AreEqual(res, m2, L"They should both have all zero elements");
 		}
 
 		TEST_METHOD(PlusOperatorTest)
@@ -113,7 +113,7 @@ namespace UnitTest1
 			matrix2i m1(1, 2, 3, 4);
 			matrix2i m2(5, 6, 7, 8);
 
-			m1 += m2;
+			m1 = m1 + m2;
 
 			// should be equal to m{6, 8, 10, 12}
 			matrix2i comp1{ 6, 8, 10, 13 };
@@ -142,7 +142,8 @@ namespace UnitTest1
 			matrix2i m1(1, 2, 3, 4);
 			matrix2i m2(5, 6, 7, 8);
 
-			m1 -= m2;
+			// removed -= operator
+			m1 = m1 - m2;
 
 			// should be equal to m{-4, 4, -4, -4}
 			matrix2i comp1{ 6, 8, 10, 13 };
@@ -170,7 +171,7 @@ namespace UnitTest1
 		{
 			// TODO: Your test code here
 			matrix2i m1;
-			m1.scale(4, 7);
+			m1 = m1.scale(4, 7);
 			matrix2i m2(4, 0, 0, 8);
 
 
@@ -184,9 +185,7 @@ namespace UnitTest1
 		{
 			// TODO: Your test code here
 			matrix2i m1{ 3, 4, 7, 9 };
-			m1.transpose();
-
-
+			m1 = m1.transpose();
 
 			// should be equal to m {3 4
 			//						 7 9}
@@ -206,7 +205,7 @@ namespace UnitTest1
 
 
 			matrix2f m;
-			m.rotation_z(pi_div_3);
+			m = m.rotation_z(pi_div_3);
 
 			float c = cos(pi_div_3);
 			float s = sin(pi_div_3);
