@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <numeric>
+#include <cmath>
 
 namespace knu {
 	namespace math {
@@ -1568,7 +1569,7 @@ namespace knu {
 					return res;
 				}
 
-				static mat4 rotation_matrix_x(T radians)
+				static mat4 rotation_x_matrix(T radians)
 				{
 					T c = cos(radians);
 					T s = sin(radians);
@@ -1581,7 +1582,7 @@ namespace knu {
 					return res;
 				}
 
-				static mat4 rotation_matrix_y(T radians)
+				static mat4 rotation_y_matrix(T radians)
 				{
 					T c = cos(radians);
 					T s = sin(radians);
@@ -1594,7 +1595,7 @@ namespace knu {
 					return res;
 				}
 
-				static mat4 rotation_matrix_z(T radians)
+				static mat4 rotation_z_matrix(T radians)
 				{
 					T c = cos(radians);
 					T s = sin(radians);
@@ -1777,6 +1778,37 @@ namespace knu {
 				});
 
 				return std::accumulate(std::begin(r), std::end(r), Point());
+			} 
+
+			template<template<typename> typename VecType, typename T>
+			T angle(const VecType<T> &v1, const VecType<T> &v2)
+			{
+				return acos(v1.dot(v2));
+			}
+
+			template<typename T>
+			T distanceVx(const vec2<T> &v1, const vec2<T> &v2)
+			{
+				return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2));
+			}
+
+			template<typename T>
+			T distanceVx(const vec3<T> &v1, const vec3<T> &v2)
+			{
+				return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2) + pow(v1.z - v2.z, 2));
+			}
+
+			template<typename T>
+			T distanceVx(const vec4<T> &v1, const vec4<T> &v2)
+			{
+				// do not process the w coordinate
+				return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2) + pow(v1.z - v2.z, 2));
+			}
+
+			template<typename VecType>
+			typename VecType::value_type distance(const VecType &v1, const VecType &v2)
+			{
+				return distanceVx(v1, v2);
 			}
 
 		} // namespace of v1

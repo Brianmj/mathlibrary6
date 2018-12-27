@@ -381,7 +381,7 @@ namespace UnitTest1
 			matrix4f r1 = m * m2 * m3;
 
 			Assert::AreEqual(r1.is_identity(), true);
-			m = matrix4f::rotation_matrix_z(degrees_to_radians(90.0f));
+			m = matrix4f::rotation_z_matrix(degrees_to_radians(90.0f));
 
 			vector4f v{ 1.0f, 0.0f, 0.0f, 0.0f };
 
@@ -396,9 +396,9 @@ namespace UnitTest1
 
 		TEST_METHOD(MakeMatrices)
 		{
-			matrix4f::rotation_matrix_x(44.3f);
-			matrix4f::rotation_matrix_y(30.0f);
-			matrix4f::rotation_matrix_z(20.0f);
+			matrix4f::rotation_x_matrix(44.3f);
+			matrix4f::rotation_y_matrix(30.0f);
+			matrix4f::rotation_z_matrix(20.0f);
 
 			matrix4f::scale_matrix(1, 1, 1);
 
@@ -418,6 +418,34 @@ namespace UnitTest1
 			auto point_combination = affine_combination(points, scalars);
 
 			Assert::AreNotEqual(point_combination, vector4f{ 0.0f, 0.0f, 0.0f, 1.0f });
+		}
+
+		TEST_METHOD(AngleTest)
+		{
+			/*matrix4f rot = matrix4f::rotation_matrix_z(degrees_to_radians(45.0f));
+			vector4f x_vec{ 1.0f, 0.0f, 0.0f, 0.0f };
+
+			vector4f rot_vec = rot * x_vec;*/
+
+			matrix3f rot = matrix3f::rotation_z_matrix(degrees_to_radians(45.0f));
+			vector3f x_vec{ 1.0f, 0.0f, 0.0f };
+
+			vector3f rot_vec = rot * x_vec;
+
+			auto angle_between = angle(rot_vec, x_vec);
+			auto angle_in_degrees = radians_to_degrees<float>(angle_between);
+			
+			Assert::AreEqual(angle_in_degrees, 45.000f);
+		}
+
+		TEST_METHOD(CrossProductTest)
+		{
+			vector3f v1{ -1.0f, 0.0f, 0.0f };
+			vector3f v2{ 0.0f, 0.0f, 1.0f };
+
+			auto res = v1.cross(v2);
+
+			Assert::AreEqual(res, vector3f{ 0.0f, 1.0f, 0.0f });
 		}
 	};
 }
