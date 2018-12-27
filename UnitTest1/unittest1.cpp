@@ -74,7 +74,7 @@ namespace UnitTest1
 		{
 			mat2<float> m1;
 
-			m1.set_identity();
+			m1 = mat2<float>::identity();
 
 			mat2<float> m2(1, 0, 1, 0);
 			mat2<float> m3;		// default constructed to identity
@@ -88,7 +88,7 @@ namespace UnitTest1
 			matrix2f m1;
 			matrix2f m2;
 
-			auto res = matrix2f::zero(0.0f);
+			auto res = matrix2f::zero();
 			m2 = matrix2f{ 0, 0, 0, 0 };
 			Assert::AreEqual(res, m2, L"They should both have all zero elements");
 		}
@@ -171,7 +171,7 @@ namespace UnitTest1
 		{
 			// TODO: Your test code here
 			matrix2i m1;
-			m1 = m1.scale(4, 7);
+			m1 = matrix2i::scale_matrix(4, 7);
 			matrix2i m2(4, 0, 0, 8);
 
 
@@ -205,7 +205,7 @@ namespace UnitTest1
 
 
 			matrix2f m;
-			m = m.rotation_z(pi_div_3);
+			m = matrix2f::rotation_matrix_z(pi_div_3);
 
 			float c = cos(pi_div_3);
 			float s = sin(pi_div_3);
@@ -225,7 +225,7 @@ namespace UnitTest1
 			//Assert::AreEqual(m1.is_identity(), true);
 			Assert::AreEqual(m2.is_identity(), true);
 
-			m1.set_identity();
+			m1 = matrix3f::identity();
 			Assert::AreEqual(m2, m1);
 		}
 
@@ -250,8 +250,7 @@ namespace UnitTest1
 			// 1.0471975511965977461542144610932
 			const float pi_div_3 = PI / 3.0f;
 
-			matrix3f m;
-			m.rotation_z(pi_div_3);
+			matrix3f m = matrix3f::rotation_z_matrix(pi_div_3);
 
 			float c = cos(pi_div_3);
 			float s = sin(pi_div_3);
@@ -270,8 +269,7 @@ namespace UnitTest1
 			// 1.0471975511965977461542144610932
 			const float pi_div_3 = PI / 3.0f;
 
-			matrix3f m;
-			m.rotation_y(pi_div_3);
+			matrix3f m = matrix3f::rotation_y_matrix(pi_div_3);
 
 			float c = cos(pi_div_3);
 			float s = sin(pi_div_3);
@@ -290,8 +288,7 @@ namespace UnitTest1
 			// 1.0471975511965977461542144610932
 			const float pi_div_3 = PI / 3.0f;
 
-			matrix3f m;
-			m.rotation_x(pi_div_3);
+			matrix3f m = matrix3f::rotation_x_matrix(pi_div_3);
 
 			float c = cos(pi_div_3);
 			float s = sin(pi_div_3);
@@ -361,8 +358,7 @@ namespace UnitTest1
 
 		TEST_METHOD(Mat3RotationZMultiplyVec)
 		{
-			matrix3f m;
-			m.rotation_z(degrees_to_radians(90.0f));
+			matrix3f m = matrix3f::rotation_z_matrix(degrees_to_radians(90.0f));
 
 			vector3f v{ 1.0f, 0.0f, 0.0f };
 
