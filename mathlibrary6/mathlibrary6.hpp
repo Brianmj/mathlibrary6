@@ -1175,9 +1175,9 @@ namespace knu {
 
 				mat3 transpose() const
 				{
-					auto row0 = get_row_0();
-					auto row1 = get_row_1();
-					auto row2 = get_row_2();
+					auto row0 = get_column_0();
+					auto row1 = get_column_1();
+					auto row2 = get_column_2();
 
 					return mat3(	row0.x, row0.y, row0.z,
 									row1.x, row1.y, row1.z,
