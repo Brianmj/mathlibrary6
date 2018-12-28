@@ -1331,6 +1331,8 @@ namespace knu {
 					res[6] = y;
 					res[10] = z;
 					res[14] = w;
+
+					return res;
 				}
 
 				mat4 set_row_2(const vec4<T> &v) const
@@ -1345,6 +1347,8 @@ namespace knu {
 					res[7] = y;
 					res[11] = z;
 					res[15] = w;
+
+					return res;
 				}
 
 				mat4 set_row_3(const vec4<T> &v) const
@@ -1379,6 +1383,8 @@ namespace knu {
 					res[1] = y;
 					res[2] = z;
 					res[3] = w;
+
+					return res;
 				}
 
 				mat4 set_column_0(const vec4<T> &v) const
