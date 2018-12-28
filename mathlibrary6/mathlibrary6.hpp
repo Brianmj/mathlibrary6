@@ -633,14 +633,14 @@ namespace knu {
 				mat2<T>() :
 					elements()
 				{
-					// set to identity (column major
+					// set to identity (row major)
 					elements[0] = 1;
 					elements[1] = 0;
 					elements[2] = 0;
 					elements[3] = 1;
 				}
 
-				// column major
+				// row major
 				mat2(T a, T b, T c, T d) :
 					elements()
 				{
@@ -675,7 +675,7 @@ namespace knu {
 					return are_equal;
 				}
 
-				// column major
+				// row major
 				T &operator [](int i)
 				{
 					return elements[i];
@@ -686,59 +686,22 @@ namespace knu {
 					return elements[i];
 				}
 
-				vec2<T> get_row_0() const
+				// columns ===================================
+				vec2<T> get_column_0() const
 				{
 					return vec2<T>(elements[0], elements[2]);
 				}
 
-				vec2<T> get_row_1() const
+				vec2<T> get_column_1() const
 				{
 					return vec2<T>(elements[1], elements[3]);
 				}
 
-				mat2 set_row_0(T a, T b) const 
+				mat2 set_column_0(T a, T b) const 
 				{
 					mat2 res(*this);
 					res[0] = a;
 					res[2] = b;
-
-					return res;
-				}
-
-				mat2 set_row_0(const vec2<T> &v) const
-				{
-					return set_row_0(v.x, v.y);
-				}
-
-				mat2 set_row_1(T a, T b) const
-				{
-					mat2 res(*this);
-					res[1] = a;
-					res[3] = b;
-
-					return res;
-				}
-
-				mat2 set_row_1(const vec2<T> &v) const
-				{
-					return set_row_1(v.x, v.y);
-				}
-
-				vec2<T> get_column_0()const
-				{
-					return vec2<T>(elements[0], elements[1]);
-				}
-
-				vec2<T> get_column_1()const
-				{
-					return vec2<T>(elements[2], elements[3]);
-				}
-
-				mat2 set_column_0(T a, T b) const
-				{
-					mat2 res(*this);
-					res[0] = a;
-					res[1] = b;
 
 					return res;
 				}
@@ -751,7 +714,7 @@ namespace knu {
 				mat2 set_column_1(T a, T b) const
 				{
 					mat2 res(*this);
-					res[2] = a;
+					res[1] = a;
 					res[3] = b;
 
 					return res;
@@ -759,10 +722,48 @@ namespace knu {
 
 				mat2 set_column_1(const vec2<T> &v) const
 				{
-					set_column_1(v.x, v.y);
+					return set_column_1(v.x, v.y);
 				}
 
-				
+				// rows ==============================
+				vec2<T> get_row_0()const
+				{
+					return vec2<T>(elements[0], elements[1]);
+				}
+
+				vec2<T> get_row_1()const
+				{
+					return vec2<T>(elements[2], elements[3]);
+				}
+
+				mat2 set_row_0(T a, T b) const
+				{
+					mat2 res(*this);
+					res[0] = a;
+					res[1] = b;
+
+					return res;
+				}
+
+				mat2 set_row_0(const vec2<T> &v) const
+				{
+					return set_row_0(v.x, v.y);
+				}
+
+				mat2 set_row_1(T a, T b) const
+				{
+					mat2 res(*this);
+					res[2] = a;
+					res[3] = b;
+
+					return res;
+				}
+
+				mat2 set_row_1(const vec2<T> &v) const
+				{
+					return set_row_1(v.x, v.y);
+				}
+
 				static mat2 identity_matrix()
 				{
 					mat2 res(static_cast<T>(1), static_cast<T>(0),
@@ -811,9 +812,9 @@ namespace knu {
 				{
 					mat2 ret;
 					ret[0] = get_row_0().dot(m.get_column_0());
-					ret[2] = get_row_0().dot(m.get_column_1());
+					ret[1] = get_row_0().dot(m.get_column_1());
 
-					ret[1] = get_row_1().dot(m.get_column_0());
+					ret[2] = get_row_1().dot(m.get_column_0());
 					ret[3] = get_row_1().dot(m.get_column_1());
 					return ret;
 				}
@@ -837,8 +838,8 @@ namespace knu {
 
 				mat2 transpose() const
 				{
-					auto row0 = get_row_0();
-					auto row1 = get_row_1();
+					auto row0 = get_column_0();
+					auto row1 = get_column_1();
 
 					return mat2(row0.x, row0.y,
 						row1.x, row1.y);
@@ -1632,12 +1633,17 @@ namespace knu {
 
 				static mat4 translation_matrix(T x, T y, T z)
 				{
-					mat4 res(1, 0, 0, 0,
-						0, 1, 0, 0,
-						0, 0, 1, 0,
-						x, y, z, 1);
+					mat4 res(	1, 0, 0, 0,
+								0, 1, 0, 0,
+								0, 0, 1, 0,
+								x, y, z, 1);
 
 					return res;
+				}
+
+				static mat4 translation_matrix(const vec3<T> &v)
+				{
+					return translation_matrix(v.x, v.y, v.z);
 				}
 
 				static mat4 translation_matrix(const vec4<T> &v)

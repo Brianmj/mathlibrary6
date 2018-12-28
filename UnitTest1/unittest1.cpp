@@ -7,8 +7,6 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace knu::math;
 
-
-
 namespace UnitTest1
 {		
 	TEST_CLASS(UnitTest1)
@@ -31,7 +29,7 @@ namespace UnitTest1
 			mat2<float> m1(1, 2, 3, 4);
 
 			auto r1 = m1.get_row_0();
-			vector2f v(1, 3);
+			vector2f v(1, 2);
 
 			Assert::AreEqual(r1, v, L"They are not equal");
 		}
@@ -42,7 +40,7 @@ namespace UnitTest1
 			mat2<float> m1(1, 2, 3, 4);
 
 			auto r1 = m1.get_row_1();
-			vector2f v(2, 4);
+			vector2f v(3, 4);
 
 			Assert::AreEqual(r1, v, L"They are not equal");
 		}
@@ -54,7 +52,7 @@ namespace UnitTest1
 
 			auto c1 = m1.get_column_0();
 			//v2f v(2, 4);
-			vector2f v(1, 2);
+			vector2f v(1, 3);
 			Assert::AreEqual(c1, v, L"Not equal: Should be 1 and 2");
 		}
 
@@ -66,7 +64,7 @@ namespace UnitTest1
 			auto c1 = m1.get_column_1();
 			//v2f v(2, 4);
 			//v2f v(1, 2);
-			vector2f v{ 3, 4 };
+			vector2f v{ 2, 4 };
 			Assert::AreEqual(c1, v, L"Not equal: Should be 3 and 4");
 		}
 
@@ -162,7 +160,7 @@ namespace UnitTest1
 
 			// should be equal to m{38, 11, 66, 32}
 			matrix2i comp1{ 6, 8, 10, 13 };
-			matrix2i comp2{ 38, 11, 66, 32 };
+			matrix2i comp2{ 35, 35, 21, 35 };
 			//Assert::AreEqual(res, comp1);
 			Assert::AreEqual(res, comp2);
 		}
