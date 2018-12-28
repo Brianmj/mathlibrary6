@@ -372,6 +372,51 @@ namespace UnitTest1
 			Assert::AreEqual(res, right);
 		}
 
+		TEST_METHOD(Mat4RotationXMultiplyVec4)
+		{
+			matrix4f m;
+			matrix4f m2;
+			matrix4f m3;
+
+			matrix4f r1 = m * m2 * m3;
+
+			Assert::AreEqual(r1.is_identity(), true);
+			m = matrix4f::rotation_x_matrix(degrees_to_radians(90.0f));
+
+			vector4f v{ 0.0f, 1.0f, 0.0f, 0.0f };
+
+			auto res = m * v;
+
+			vector4f wrong{ 1.0f, 1.0f, 0.0f, 0.0f };
+			vector4f right{ 0.0f, 0.0f, 1.0f, 0.0f };
+
+			//Assert::AreEqual(res, wrong);
+			Assert::AreEqual(res, right);
+		}
+
+
+		TEST_METHOD(Mat4RotationYMultiplyVec4)
+		{
+			matrix4f m;
+			matrix4f m2;
+			matrix4f m3;
+
+			matrix4f r1 = m * m2 * m3;
+
+			Assert::AreEqual(r1.is_identity(), true);
+			m = matrix4f::rotation_y_matrix(degrees_to_radians(90.0f));
+
+			vector4f v{ 1.0f, 0.0f, 0.0f, 0.0f };
+
+			auto res = v * m;
+
+			vector4f wrong{ 1.0f, 1.0f, 0.0f, 0.0f };
+			vector4f right{ 0.0f, 0.0f, -1.0f, 0.0f };
+
+			//Assert::AreEqual(res, wrong);
+			Assert::AreEqual(res, right);
+		}
+
 		TEST_METHOD(Mat4RotationZMultiplyVec4)
 		{
 			matrix4f m;
@@ -386,6 +431,29 @@ namespace UnitTest1
 			vector4f v{ 1.0f, 0.0f, 0.0f, 0.0f };
 
 			auto res = m * v;
+
+			vector4f wrong{ 1.0f, 1.0f, 0.0f, 0.0f };
+			vector4f right{ 0.0f, 1.0f, -0.0f, 0.0f };
+
+			//Assert::AreEqual(res, wrong);
+			Assert::AreEqual(res, right);
+		}
+
+		TEST_METHOD(Mat4RotationZPreMultiplyVec4)
+		{
+			matrix4f m;
+			matrix4f m2;
+			matrix4f m3;
+			matrix4f m4;
+
+			matrix4f r1 = m * m2 * m3 * m4;
+
+			Assert::AreEqual(r1.is_identity(), true);
+			m = matrix4f::rotation_z_matrix(degrees_to_radians(90.0f));
+
+			vector4f v{ 1.0f, 0.0f, 0.0f, 0.0f };
+
+			auto res = v * m;
 
 			vector4f wrong{ 1.0f, 1.0f, 0.0f, 0.0f };
 			vector4f right{ 0.0f, 1.0f, -0.0f, 0.0f };

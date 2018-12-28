@@ -1202,6 +1202,7 @@ namespace knu {
 					*this = identity_matrix();
 				}
 
+				// row major
 				mat4(T a, T b, T c, T d, T e, T f, T g, T h, T i, T j, T k, T l, T m, T n, T o, T p)
 				{
 					elements[0] = a;
@@ -1271,27 +1272,28 @@ namespace knu {
 					return elements[i];
 				}
 
-				vec4<T> get_row_0()const
+				// === Columns ==========================================
+				vec4<T> get_column_0()const
 				{
 					return vec4<T>(elements[0], elements[4], elements[8], elements[12]);
 				}
 
-				vec4<T> get_row_1()const
+				vec4<T> get_column_1()const
 				{
 					return vec4<T>(elements[1], elements[5], elements[9], elements[13]);
 				}
 
-				vec4<T> get_row_2()const
+				vec4<T> get_column_2()const
 				{
 					return vec4<T>(elements[2], elements[6], elements[10], elements[14]);
 				}
 
-				vec4<T> get_row_3()const
+				vec4<T> get_column_3()const
 				{
 					return vec4<T>(elements[3], elements[7], elements[11], elements[15]);
 				}
 
-				mat4 set_row_0(T x, T y, T z, T w) const
+				mat4 set_column_0(T x, T y, T z, T w) const
 				{
 					mat4 res(*this);
 					res[0] = x;
@@ -1303,90 +1305,6 @@ namespace knu {
 				}
 
 
-				mat4 set_row_0(const vec4<T> &v) const
-				{
-					return set_row_0(v.x, v.y, v.z, v.w);
-				}
-
-				mat4 set_row_1(T x, T y, T z, T w) const
-				{
-					mat4 res(*this);
-					res[1] = x;
-					res[5] = y;
-					res[9] = z;
-					res[13] = w;
-
-					return res;
-				}
-
-				mat4 set_row_1(const vec4<T> &v) const
-				{
-					return set_row_1(v.x, v.y, v.z, v.w);
-				}
-
-				mat4 set_row_2(T x, T y, T z, T w) const
-				{
-					mat4 res(*this);
-					res[2] = x;
-					res[6] = y;
-					res[10] = z;
-					res[14] = w;
-
-					return res;
-				}
-
-				mat4 set_row_2(const vec4<T> &v) const
-				{
-					return set_row_2(v.x, v.y, v.z, v.w);
-				}
-
-				mat4 set_row_3(T x, T y, T z, T w) const
-				{
-					mat4 res(*this);
-					res[3] = x;
-					res[7] = y;
-					res[11] = z;
-					res[15] = w;
-
-					return res;
-				}
-
-				mat4 set_row_3(const vec4<T> &v) const
-				{
-					return set_row_3(v.x, v.y, v.z, v.w);
-				}
-
-				vec4<T> get_column_0()const
-				{
-					return vec4<T>(elements[0], elements[1], elements[2], elements[3]);
-				}
-
-				vec4<T> get_column_1()const
-				{
-					return vec4<T>(elements[4], elements[5], elements[6], elements[7]);
-				}
-
-				vec4<T> get_column_2()const
-				{
-					return vec4<T>(elements[8], elements[9], elements[10], elements[11]);
-				}
-
-				vec4<T> get_column_3()const
-				{
-					return vec4<T>(elements[12], elements[13], elements[14], elements[15]);
-				}
-
-				mat4 set_column_0(T x, T y, T z, T w) const
-				{
-					mat4 res(*this);
-					res[0] = x;
-					res[1] = y;
-					res[2] = z;
-					res[3] = w;
-
-					return res;
-				}
-
 				mat4 set_column_0(const vec4<T> &v) const
 				{
 					return set_column_0(v.x, v.y, v.z, v.w);
@@ -1395,10 +1313,10 @@ namespace knu {
 				mat4 set_column_1(T x, T y, T z, T w) const
 				{
 					mat4 res(*this);
-					res[4] = x;
+					res[1] = x;
 					res[5] = y;
-					res[6] = z;
-					res[7] = w;
+					res[9] = z;
+					res[13] = w;
 
 					return res;
 				}
@@ -1411,10 +1329,10 @@ namespace knu {
 				mat4 set_column_2(T x, T y, T z, T w) const
 				{
 					mat4 res(*this);
-					res[8] = x;
-					res[9] = y;
+					res[2] = x;
+					res[6] = y;
 					res[10] = z;
-					res[11] = w;
+					res[14] = w;
 
 					return res;
 				}
@@ -1427,9 +1345,9 @@ namespace knu {
 				mat4 set_column_3(T x, T y, T z, T w) const
 				{
 					mat4 res(*this);
-					res[12] = x;
-					res[13] = y;
-					res[14] = z;
+					res[3] = x;
+					res[7] = y;
+					res[11] = z;
 					res[15] = w;
 
 					return res;
@@ -1438,6 +1356,92 @@ namespace knu {
 				mat4 set_column_3(const vec4<T> &v) const
 				{
 					return set_column_3(v.x, v.y, v.z, v.w);
+				}
+
+				// ==ROWS ==============================================
+
+				vec4<T> get_row_0()const
+				{
+					return vec4<T>(elements[0], elements[1], elements[2], elements[3]);
+				}
+
+				vec4<T> get_row_1()const
+				{
+					return vec4<T>(elements[4], elements[5], elements[6], elements[7]);
+				}
+
+				vec4<T> get_row_2()const
+				{
+					return vec4<T>(elements[8], elements[9], elements[10], elements[11]);
+				}
+
+				vec4<T> get_row_3()const
+				{
+					return vec4<T>(elements[12], elements[13], elements[14], elements[15]);
+				}
+
+				mat4 set_row_0(T x, T y, T z, T w) const
+				{
+					mat4 res(*this);
+					res[0] = x;
+					res[1] = y;
+					res[2] = z;
+					res[3] = w;
+
+					return res;
+				}
+
+				mat4 set_row_0(const vec4<T> &v) const
+				{
+					return set_row_0(v.x, v.y, v.z, v.w);
+				}
+
+				mat4 set_row_1(T x, T y, T z, T w) const
+				{
+					mat4 res(*this);
+					res[4] = x;
+					res[5] = y;
+					res[6] = z;
+					res[7] = w;
+
+					return res;
+				}
+
+				mat4 set_row_1(const vec4<T> &v) const
+				{
+					return set_row_1(v.x, v.y, v.z, v.w);
+				}
+
+				mat4 set_row_2(T x, T y, T z, T w) const
+				{
+					mat4 res(*this);
+					res[8] = x;
+					res[9] = y;
+					res[10] = z;
+					res[11] = w;
+
+					return res;
+				}
+
+				mat4 set_row_2(const vec4<T> &v) const
+				{
+					return set_row_2(v.x, v.y, v.z, v.w);
+				}
+
+				mat4 set_row_3(T x, T y, T z, T w) const
+				{
+					mat4 res(*this);
+					res[12] = x;
+					res[13] = y;
+					res[14] = z;
+					res[15] = w;
+
+					return res;
+				}
+
+				mat4 set_row_3(const vec4<T> &v) const
+				{
+					return set_row_3(v.x, v.y, v.z, v.w);
 				}
 
 				mat4<T> operator+(const mat4<T> &m) const
@@ -1515,23 +1519,23 @@ namespace knu {
 					mat4 ret;
 
 					ret[0] = get_row_0().dot(m.get_column_0());
-					ret[4] = get_row_0().dot(m.get_column_1());
-					ret[8] = get_row_0().dot(m.get_column_2());
-					ret[12] = get_row_0().dot(m.get_column_3());
+					ret[1] = get_row_0().dot(m.get_column_1());
+					ret[2] = get_row_0().dot(m.get_column_2());
+					ret[3] = get_row_0().dot(m.get_column_3());
 
-					ret[1] = get_row_1().dot(m.get_column_0());
+					ret[4] = get_row_1().dot(m.get_column_0());
 					ret[5] = get_row_1().dot(m.get_column_1());
-					ret[9] = get_row_1().dot(m.get_column_2());
-					ret[13] = get_row_1().dot(m.get_column_3());
+					ret[6] = get_row_1().dot(m.get_column_2());
+					ret[7] = get_row_1().dot(m.get_column_3());
 
-					ret[2] = get_row_2().dot(m.get_column_0());
-					ret[6] = get_row_2().dot(m.get_column_1());
+					ret[8] = get_row_2().dot(m.get_column_0());
+					ret[9] = get_row_2().dot(m.get_column_1());
 					ret[10] = get_row_2().dot(m.get_column_2());
-					ret[14] = get_row_2().dot(m.get_column_3());
+					ret[11] = get_row_2().dot(m.get_column_3());
 
-					ret[3] = get_row_3().dot(m.get_column_0());
-					ret[7] = get_row_3().dot(m.get_column_1());
-					ret[11] = get_row_3().dot(m.get_column_2());
+					ret[12] = get_row_3().dot(m.get_column_0());
+					ret[13] = get_row_3().dot(m.get_column_1());
+					ret[14] = get_row_3().dot(m.get_column_2());
 					ret[15] = get_row_3().dot(m.get_column_3());
 
 					return ret;
@@ -1581,8 +1585,8 @@ namespace knu {
 					T s = sin(radians);
 
 					mat4 res(	1, 0, 0, 0,
-								0, c, -s, 0,
-								0, s, c, 0,
+								0, c, s, 0,
+								0, -s, c, 0,
 								0, 0, 0, 1);
 
 					return res;
@@ -1593,9 +1597,9 @@ namespace knu {
 					T c = cos(radians);
 					T s = sin(radians);
 
-					mat4 res(	c, 0, s, 0,
+					mat4 res(	c, 0, -s, 0,
 								0, 1, 0, 0,
-								-s, 0, c, 0,
+								s, 0, c, 0,
 								0, 0, 0, 1);
 
 					return res;
@@ -1641,10 +1645,10 @@ namespace knu {
 
 				mat4 transpose() const
 				{
-					auto row0 = get_row_0();
-					auto row1 = get_row_1();
-					auto row2 = get_row_2();
-					auto row3 = get_row_3();
+					auto row0 = get_column_0();
+					auto row1 = get_column_1();
+					auto row2 = get_column_2();
+					auto row3 = get_column_3();
 
 					mat4 res(row0.x, row0.y, row0.z, row0.w,
 						row1.x, row1.y, row1.z, row1.w,
@@ -1702,16 +1706,39 @@ namespace knu {
 				return ret;
 			}
 
-			// for now, only supporting matrix post-multiplication
-			// so matrix * vector
+			template<typename T>
+			vec3<T> operator*(const vec3<T> &v, const mat3<T> &m)
+			{
+				vec3<T> ret;
+				ret.x = v.dot(m.get_column_0());
+				ret.y = v.dot(m.get_column_1());
+				ret.z = v.dot(m.get_column_2());
+
+				return ret;
+			}
+
+			// matrix post-multiplication
 			template<typename T>
 			vec4<T> operator*(const mat4<T> &m, const vec4<T> &v)
 			{
 				vec4<T> ret;
-				ret.x = m.get_row_0().dot(v);
-				ret.y = m.get_row_1().dot(v);
-				ret.z = m.get_row_2().dot(v);
-				ret.w = m.get_row_3().dot(v);
+				ret.x = m.get_column_0().dot(v);
+				ret.y = m.get_column_1().dot(v);
+				ret.z = m.get_column_2().dot(v);
+				ret.w = m.get_column_3().dot(v);
+
+				return ret;
+			}
+
+			// matrix pre-multiply
+			template<typename T>
+			vec4<T> operator*( const vec4<T> &v, const mat4<T> &m)
+			{
+				vec4<T> ret;
+				ret.x = v.dot(m.get_column_0());
+				ret.y = v.dot(m.get_column_1());
+				ret.z = v.dot(m.get_column_2());
+				ret.w = v.dot(m.get_column_3());
 
 				return ret;
 			}
