@@ -863,7 +863,7 @@ namespace knu {
 					*this = identity_matrix();
 				}
 
-				// column major
+				// row major
 				mat3(T a, T b, T c, T d, T e, T f, T g, T h, T i)
 				{
 					elements[0] = a;
@@ -913,87 +913,28 @@ namespace knu {
 					return elements[i];
 				}
 
-				vec3<T> get_row_0()const
+				// =====Columns
+				vec3<T> get_column_0()const
 				{
 					return vec3<T>(elements[0], elements[3], elements[6]);
 				}
 
-				vec3<T> get_row_1()const
+				vec3<T> get_column_1()const
 				{
 					return vec3<T>(elements[1], elements[4], elements[7]);
 				}
 
-				vec3<T> get_row_2()const
-				{
-					return vec3<T>(elements[2], elements[5], elements[8]);
-				}
-
-				mat3 set_row_0(T x, T y, T z) const
-				{
-					mat3 res(*this);
-					res[0] = x;
-					res[3] = y;
-					res[6] = z;
-
-					return res;
-				}
-
-				mat3 set_row_0(const vec3<T> &v) const
-				{
-					return set_row_0(v.x, v.y, v.z);
-				}
-
-				mat3 set_row_1(T x, T y, T z) const
-				{
-					mat3 res(*this);
-					res[1] = x;
-					res[4] = y;
-					res[7] = z;
-
-					return res;
-				}
-
-				mat3 set_row_1(const vec3<T> &v) const
-				{
-					return set_row_1(v.x, v.y, v.z);
-				}
-
-				mat3 set_row_2(T x, T y, T z) const
-				{
-					mat3 res(*this);
-					res[2] = x;
-					res[5] = y;
-					res[8] = z;
-
-					return res;
-				}
-
-				mat3 set_row_2(const vec3<T> &v) const
-				{
-					return set_row_2(v.x, v.y, v.z);
-				}
-
-				vec3<T> get_column_0()const
-				{
-					return vec3<T>(elements[0], elements[1], elements[2]);
-				}
-
-				vec3<T> get_column_1()const
-				{
-					return vec3<T>(elements[3], elements[4], elements[5]);
-				}
-
 				vec3<T> get_column_2()const
 				{
-					return vec3<T>(elements[6], elements[7], elements[8]);
+					return vec3<T>(elements[2], elements[5], elements[8]);
 				}
 
 				mat3 set_column_0(T x, T y, T z) const
 				{
 					mat3 res(*this);
 					res[0] = x;
-					res[1] = y;
-					res[2] = z;
+					res[3] = y;
+					res[6] = z;
 
 					return res;
 				}
@@ -1006,9 +947,9 @@ namespace knu {
 				mat3 set_column_1(T x, T y, T z) const
 				{
 					mat3 res(*this);
-					res[3] = x;
+					res[1] = x;
 					res[4] = y;
-					res[5] = z;
+					res[7] = z;
 
 					return res;
 				}
@@ -1021,8 +962,8 @@ namespace knu {
 				mat3 set_column_2(T x, T y, T z) const
 				{
 					mat3 res(*this);
-					res[6] = x;
-					res[7] = y;
+					res[2] = x;
+					res[5] = y;
 					res[8] = z;
 
 					return res;
@@ -1031,6 +972,67 @@ namespace knu {
 				mat3 set_column_2(const vec3<T> &v) const
 				{
 					return set_column_2(v.x, v.y, v.z);
+				}
+
+				// == ROWS ===============================
+				vec3<T> get_row_0()const
+				{
+					return vec3<T>(elements[0], elements[1], elements[2]);
+				}
+
+				vec3<T> get_row_1()const
+				{
+					return vec3<T>(elements[3], elements[4], elements[5]);
+				}
+
+				vec3<T> get_row_2()const
+				{
+					return vec3<T>(elements[6], elements[7], elements[8]);
+				}
+
+				mat3 set_row_0(T x, T y, T z) const
+				{
+					mat3 res(*this);
+					res[0] = x;
+					res[1] = y;
+					res[2] = z;
+
+					return res;
+				}
+
+				mat3 set_row_0(const vec3<T> &v) const
+				{
+					return set_row_0(v.x, v.y, v.z);
+				}
+
+				mat3 set_row_1(T x, T y, T z) const
+				{
+					mat3 res(*this);
+					res[3] = x;
+					res[4] = y;
+					res[5] = z;
+
+					return res;
+				}
+
+				mat3 set_row_1(const vec3<T> &v) const
+				{
+					return set_row_1(v.x, v.y, v.z);
+				}
+
+				mat3 set_row_2(T x, T y, T z) const
+				{
+					mat3 res(*this);
+					res[6] = x;
+					res[7] = y;
+					res[8] = z;
+
+					return res;
+				}
+
+				mat3 set_row_2(const vec3<T> &v) const
+				{
+					return set_row_2(v.x, v.y, v.z);
 				}
 
 				mat3 operator+(const mat3 &m) const
@@ -1077,15 +1079,15 @@ namespace knu {
 				{
 					mat3<T> ret;
 					ret[0] = get_row_0().dot(m.get_column_0());
-					ret[3] = get_row_0().dot(m.get_column_1());
-					ret[6] = get_row_0().dot(m.get_column_2());
+					ret[1] = get_row_0().dot(m.get_column_1());
+					ret[2] = get_row_0().dot(m.get_column_2());
 
-					ret[1] = get_row_1().dot(m.get_column_0());
+					ret[3] = get_row_1().dot(m.get_column_0());
 					ret[4] = get_row_1().dot(m.get_column_1());
-					ret[7] = get_row_1().dot(m.get_column_2());
+					ret[5] = get_row_1().dot(m.get_column_2());
 
-					ret[2] = get_row_2().dot(m.get_column_0());
-					ret[5] = get_row_2().dot(m.get_column_1());
+					ret[6] = get_row_2().dot(m.get_column_0());
+					ret[7] = get_row_2().dot(m.get_column_1());
 					ret[8] = get_row_2().dot(m.get_column_2());
 
 					return ret;
@@ -1099,9 +1101,9 @@ namespace knu {
 
 				static mat3 identity_matrix() 
 				{
-					mat3 res(1, 0, 0,
-						0, 1, 0,
-						0, 0, 1);
+					mat3 res(	1, 0, 0,
+								0, 1, 0,
+								0, 0, 1);
 
 					return res;
 				}
@@ -1127,9 +1129,9 @@ namespace knu {
 
 				static mat3 scale_matrix(T x, T y, T z)
 				{
-					mat3 res(x, 0, 0,
-						0, y, 0,
-						0, 0, z);
+					mat3 res(	x, 0, 0,
+								0, y, 0,
+								0, 0, z);
 
 					return res;
 				}
@@ -1140,8 +1142,8 @@ namespace knu {
 					T s = sin(radians);
 
 					mat3<T> res(1, 0, 0,
-						0, c, -s,
-						0, s, c);
+						0, c, s,
+						0, -s, c);
 
 					return res;
 				}
@@ -1152,9 +1154,9 @@ namespace knu {
 					T c = cos(radians);
 					T s = sin(radians);
 
-					mat3 res(c, 0, s,
+					mat3 res(c, 0, -s,
 						0, 1, 0,
-						-s, 0, c);
+						s, 0, c);
 
 					return res;
 				}
@@ -1689,19 +1691,29 @@ namespace knu {
 			vec2<T> operator *(const mat2<T> &m, const vec2<T> &v)
 			{
 				vec2<T> ret;
-				ret.x = m.get_row_0().dot(v);
-				ret.y = m.get_row_1().dot(v);
+				ret.x = m.get_column_0().dot(v);
+				ret.y = m.get_column_1().dot(v);
 				return ret;
 
+			}
+
+			template<typename T>
+			vec2<T> operator*(const vec2<T> &v, const mat2<T> &m)
+			{
+				vec2<T> ret;
+				ret.x = v.dot(m.get_column_0());
+				ret.y = v.dot(m.get_column_1());
+
+				return ret;
 			}
 
 			template<typename T>
 			vec3<T> operator*(const mat3<T> &m, const vec3<T> &v)
 			{
 				vec3<T> ret;
-				ret.x = m.get_row_0().dot(v);
-				ret.y = m.get_row_1().dot(v);
-				ret.z = m.get_row_2().dot(v);
+				ret.x = m.get_column_0().dot(v);
+				ret.y = m.get_column_1().dot(v);
+				ret.z = m.get_column_2().dot(v);
 
 				return ret;
 			}

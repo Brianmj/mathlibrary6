@@ -237,7 +237,7 @@ namespace UnitTest1
 			matrix3i res = m1 * m2;
 
 			matrix3i wrong{ 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-			matrix3i right{ 25, 22, 16, 37, 55, 17, 30, 22, 24 };
+			matrix3i right{ 61, 45, 8, 22, 22, 5, 26, 52, 21 };
 
 			//Assert::AreEqual(res, wrong);
 			Assert::AreEqual(res, right);
@@ -275,7 +275,7 @@ namespace UnitTest1
 			float s = sin(pi_div_3);
 
 			matrix3f wrong(c + 0.1f, s + 0.1f, 0, -s, c, 0, 0, 0, 1.0f);
-			matrix3f right(c, 0.0f, s, 0.0f, 1.0f, 0.0f, -s, 0.0f, c);
+			matrix3f right(c, 0.0f, -s, 0.0f, 1.0f, 0.0f, s, 0.0f, c);
 
 			//Assert::AreEqual(m, wrong);
 			Assert::AreEqual(m, right);
@@ -294,7 +294,7 @@ namespace UnitTest1
 			float s = sin(pi_div_3);
 
 			matrix3f wrong(c + 0.1f, s + 0.1f, 0, -s, c, 0, 0, 0, 1.0f);
-			matrix3f right(1.0f, 0.0f, 0.0f, 0.0f, c, -s, 0.0f, s, c);
+			matrix3f right(1.0f, 0.0f, 0.0f, 0.0f, c, s, 0.0f, -s, c);
 
 			//Assert::AreEqual(m, wrong);
 			Assert::AreEqual(m, right);
@@ -363,7 +363,7 @@ namespace UnitTest1
 
 			vector3f v{ 1.0f, 0.0f, 0.0f };
 
-			auto res = m * v;
+			auto res = v * m;
 
 			vector3f wrong{ 1.0f, 1.0f, 0.0f};
 			vector3f right{ 0.0f, 1.0f, -0.0f};
