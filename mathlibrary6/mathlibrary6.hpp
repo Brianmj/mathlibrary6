@@ -634,20 +634,16 @@ namespace knu {
 					elements()
 				{
 					// set to identity (row major)
-					elements[0] = 1;
-					elements[1] = 0;
-					elements[2] = 0;
-					elements[3] = 1;
+					elements[0] = 1; elements[1] = 0;
+					elements[2] = 0; elements[3] = 1;
 				}
 
 				// row major
 				mat2(T a, T b, T c, T d) :
 					elements()
 				{
-					elements[0] = a;
-					elements[1] = b;
-					elements[2] = c;
-					elements[3] = d;
+					elements[0] = a; elements[1] = b;
+					elements[2] = c; elements[3] = d;
 				}
 
 				mat2(const mat2 &m) :
@@ -782,10 +778,10 @@ namespace knu {
 
 				mat2 operator+(const mat2 &m) const
 				{
-					return mat2(elements[0] + m.elements[0],
-						elements[1] + m.elements[1],
-						elements[2] + m.elements[2],
-						elements[3] + m.elements[3]);
+					return mat2(	elements[0] + m.elements[0],
+									elements[1] + m.elements[1],
+									elements[2] + m.elements[2],
+									elements[3] + m.elements[3]);
 				}
 
 				/*mat2 &operator+=(const mat2 &m)
@@ -796,10 +792,10 @@ namespace knu {
 
 				mat2 operator-(const mat2 &m) const
 				{
-					return mat2(elements[0] - m.elements[0],
-						elements[1] - m.elements[1],
-						elements[2] - m.elements[2],
-						elements[3] - m.elements[3]);
+					return mat2(	elements[0] - m.elements[0],
+									elements[1] - m.elements[1],
+									elements[2] - m.elements[2],
+									elements[3] - m.elements[3]);
 				}
 
 				/*mat2 &operator-=(const mat2 &m)
@@ -1038,16 +1034,16 @@ namespace knu {
 
 				mat3 operator+(const mat3 &m) const
 				{
-					mat3 ret(elements[0] + m.elements[0],
-						elements[1] + m.elements[1],
-						elements[2] + m.elements[2],
-						elements[3] + m.elements[3],
-						elements[4] + m.elements[4],
-						elements[5] + m.elements[5],
-						elements[6] + m.elements[6],
-						elements[7] + m.elements[7],
-						elements[8] + m.elements[8]);
-					return ret;
+					mat3 ret(	elements[0] + m.elements[0],
+								elements[1] + m.elements[1],
+								elements[2] + m.elements[2],
+								elements[3] + m.elements[3],
+								elements[4] + m.elements[4],
+								elements[5] + m.elements[5],
+								elements[6] + m.elements[6],
+								elements[7] + m.elements[7],
+								elements[8] + m.elements[8]);
+					return		ret;
 				}
 
 				/*mat3 &operator +=(const mat3 &m)
@@ -1058,15 +1054,15 @@ namespace knu {
 
 				mat3 operator-(const mat3 &m)const
 				{
-					mat3<T> ret(elements[0] - m.elements[0],
-						elements[1] - m.elements[1],
-						elements[2] - m.elements[2],
-						elements[3] - m.elements[3],
-						elements[4] - m.elements[4],
-						elements[5] - m.elements[5],
-						elements[6] - m.elements[6],
-						elements[7] - m.elements[7],
-						elements[8] - m.elements[8]);
+					mat3<T> ret(	elements[0] - m.elements[0],
+									elements[1] - m.elements[1],
+									elements[2] - m.elements[2],
+									elements[3] - m.elements[3],
+									elements[4] - m.elements[4],
+									elements[5] - m.elements[5],
+									elements[6] - m.elements[6],
+									elements[7] - m.elements[7],
+									elements[8] - m.elements[8]);
 					return ret;
 				}
 
@@ -1212,14 +1208,17 @@ namespace knu {
 					elements[1] = b;
 					elements[2] = c;
 					elements[3] = d;
+
 					elements[4] = e;
 					elements[5] = f;
 					elements[6] = g;
 					elements[7] = h;
+
 					elements[8] = i;
 					elements[9] = j;
 					elements[10] = k;
 					elements[11] = l;
+
 					elements[12] = m;
 					elements[13] = n;
 					elements[14] = o;
@@ -1942,44 +1941,44 @@ std::wostream &operator <<(std::wostream &wos, const knu::math::vec4<T2> &v)
 template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::mat2<T2> &m)
 {
-	os  << m[0] << " " << m[2] << "\n"
-		<< m[1] << " " << m[3] << "\n";
+	os  << m[0] << " " << m[1] << "\n"
+		<< m[2] << " " << m[3] << "\n";
 	return os;
 }
 
 template<typename T2>
 std::wostream &operator <<(std::wostream &wos, const knu::math::mat2<T2> &m)
 {
-	wos << m[0] << " " << m[2] << "\n"
-		<< m[1] << " " << m[3] << "\n";
+	wos << m[0] << " " << m[1] << "\n"
+		<< m[2] << " " << m[3] << "\n";
 	return wos;
 }
 
 template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::mat3<T2> &m)
 {
-	os  << m[0] << " " << m[3] << " " << m[6] << "\n"
-		<< m[1] << " " << m[4] << " " << m[7] << "\n"
-		<< m[2] << " " << m[5] << " " << m[8] << "\n";
+	os  << m[0] << " " << m[1] << " " << m[2] << "\n"
+		<< m[3] << " " << m[4] << " " << m[5] << "\n"
+		<< m[6] << " " << m[7] << " " << m[8] << "\n";
 	return os;
 }
 
 template<typename T2>
 std::wostream &operator <<(std::wostream &wos, const knu::math::mat3<T2> &m)
 {
-	wos << m[0] << " " << m[3] << " " << m[6] << "\n"
-		<< m[1] << " " << m[4] << " " << m[7] << "\n"
-		<< m[2] << " " << m[5] << " " << m[8] << "\n";
+	wos << m[0] << " " << m[1] << " " << m[2] << "\n"
+		<< m[3] << " " << m[4] << " " << m[5] << "\n"
+		<< m[6] << " " << m[7] << " " << m[8] << "\n";
 	return wos;
 }
 
 template<typename T2>
 std::ostream &operator <<(std::ostream &os, const knu::math::mat4<T2> &m)
 {
-	os  << m[0] << " " << m[4] << " " << m[8] << " " << m[12] << "\n"
-		<< m[1] << " " << m[5] << " " << m[9] << " " << m[13] << "\n"
-		<< m[2] << " " << m[6] << " " << m[10] << " " << m[14] << "\n"
-		<< m[3] << " " << m[7] << " " << m[11] << " " << m[15] << "\n";
+	os  << m[0] << " " << m[1] << " " << m[2] << " " << m[3] << "\n"
+		<< m[4] << " " << m[5] << " " << m[6] << " " << m[7] << "\n"
+		<< m[8] << " " << m[9] << " " << m[10] << " " << m[11] << "\n"
+		<< m[12] << " " << m[13] << " " << m[14] << " " << m[15] << "\n";
 		
 	return os;
 }
@@ -1987,10 +1986,10 @@ std::ostream &operator <<(std::ostream &os, const knu::math::mat4<T2> &m)
 template<typename T2>
 std::wostream &operator <<(std::wostream &wos, const knu::math::mat4<T2> &m)
 {
-	wos << m[0] << " " << m[4] << " " << m[8] << " " << m[12] << "\n"
-		<< m[1] << " " << m[5] << " " << m[9] << " " << m[13] << "\n"
-		<< m[2] << " " << m[6] << " " << m[10] << " " << m[14] << "\n"
-		<< m[3] << " " << m[7] << " " << m[11] << " " << m[15] << "\n";
+	wos << m[0] << " " << m[1] << " " << m[2] << " " << m[3] << "\n"
+		<< m[4] << " " << m[5] << " " << m[6] << " " << m[7] << "\n"
+		<< m[8] << " " << m[9] << " " << m[10] << " " << m[11] << "\n"
+		<< m[12] << " " << m[13] << " " << m[14] << " " << m[15] << "\n";
 	return wos;
 }
 
