@@ -513,5 +513,25 @@ namespace UnitTest1
 
 			Assert::AreEqual(res, vector3f{ 0.0f, 1.0f, 0.0f });
 		}
+
+		TEST_METHOD(Determinant2X2)
+		{
+			matrix2i m1{ 2, 1, -1, 2 };
+			int wrong = 44;
+			int right = 5;
+
+			//Assert::AreEqual(m1.determinant(), wrong);
+			Assert::AreEqual(m1.determinant(), right);
+		}
+
+		TEST_METHOD(Determinant3X3)
+		{
+			matrix3i m1{ 3, -2, 0, 1, 4, -3, -1, 0, 2 };
+			int wrong = 312;
+			int right = 22;
+
+			//Assert::AreEqual(m1.determinant(), wrong);
+			Assert::AreEqual(m1.determinant(), right);
+		}
 	};
 }

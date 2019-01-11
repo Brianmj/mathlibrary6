@@ -841,6 +841,12 @@ namespace knu {
 						row1.x, row1.y);
 				}
 
+				T determinant() const
+				{
+					return (elements[0] * elements[3]) -
+						(elements[1] * elements[2]);
+				}
+
 				T* data()
 				{
 					return &elements[0];
@@ -1179,6 +1185,16 @@ namespace knu {
 					return mat3(	row0.x, row0.y, row0.z,
 									row1.x, row1.y, row1.z,
 									row2.x, row2.y, row2.z);
+				}
+
+				T determinant() const
+				{
+					return (elements[0] * elements[4] * elements[8]) +
+						(elements[1] * elements[5] * elements[6]) +
+						(elements[2] * elements[3] * elements[7]) -
+						(elements[2] * elements[4] * elements[6]) -
+						(elements[1] * elements[3] * elements[8]) -
+						(elements[0] * elements[5] * elements[7]);
 				}
 
 				T* data()
