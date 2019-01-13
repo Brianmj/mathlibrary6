@@ -544,12 +544,12 @@ namespace UnitTest1
 
 		TEST_METHOD(Determinant4X4)
 		{
-			matrix4i m1{6, 0, -1, 2,
-			-1, 2, 3, 6,
-			4, -3, 0, 0,
-			1, 5, 7, 2};
+			matrix4i m1{2, 6, 6, 2,
+			2, 7, 3, 6,
+			1, 5, 0, 1,
+			3, 7, 0, 7};
 			int wrong = 312;
-			int right = -844;
+			int right = -168;
 
 			//auto r0 = m1.get_row_0();
 			//auto r1 = m1.get_row_1();
@@ -560,5 +560,11 @@ namespace UnitTest1
 			//Assert::AreEqual(m1.determinant(), wrong);
 			Assert::AreEqual(right, m1.determinant());
 		}
+
+		TEST_METHOD(ProjectionMatrixTest)
+		{
+			fmake_ortho(-3, 3, -3, 3, 0.1f, 100.0f);
+		}
+
 	};
 }

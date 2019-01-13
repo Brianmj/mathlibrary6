@@ -1950,9 +1950,8 @@ namespace knu {
 			*/
 
 			template <typename T1>
-			mat4<T1> make_ortho2(T1 left, T1 right, T1 bottom, T1 top, T1 Znear, T1 Zfar)
-			{
-
+			inline mat4<T1> make_ortho2(T1 left, T1 right, T1 bottom, T1 top, T1 Znear, T1 Zfar)
+			{				
 				float tx = (right + left) / (right - left);
 				float ty = (top + bottom) / (top - bottom);
 				float tz = (Zfar + Znear) / (Zfar - Znear);
@@ -1967,7 +1966,7 @@ namespace knu {
 			}
 
 			template<typename T1>
-			mat4<T1> make_frustrum(T1 left, T1 right, T1 bottom, T1 top, T1 zNear, T1 zFar)
+			inline mat4<T1> make_frustrum(T1 left, T1 right, T1 bottom, T1 top, T1 zNear, T1 zFar)
 			{
 				float a = 2 * zNear / (right - left);
 				float b = 2 * zNear / (top - bottom);
@@ -1987,18 +1986,16 @@ namespace knu {
 			}
 
 			// some thin wrappers around the utility projection matrices so as to not deal with templates
-			mat4<float> fmake_ortho(float left, float right, float bottom, float top, float z_near, float z_far)
+			inline mat4<float> fmake_ortho(float left, float right, float bottom, float top, float z_near, float z_far)
 			{
 				return make_ortho2<float>(left, right, bottom, top, z_near, z_far);
 			}
 
-			mat4<float> fmake_frustrum(float left, float right, float bottom, float top, float z_near,
+			inline mat4<float> fmake_frustrum(float left, float right, float bottom, float top, float z_near,
 				float z_far)
 			{
 				return make_frustrum<float>(left, right, bottom, top, z_near, z_far);
 			}
-
-
 		} // namespace of v1
 
 		using vector2f = vec2<float>;
