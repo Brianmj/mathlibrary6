@@ -526,12 +526,39 @@ namespace UnitTest1
 
 		TEST_METHOD(Determinant3X3)
 		{
-			matrix3i m1{ 3, -2, 0, 1, 4, -3, -1, 0, 2 };
+			matrix3i m1{ 1, 5, 7, 
+			5, 2, -6, 
+			2, 1, 0};
 			int wrong = 312;
-			int right = 22;
+			int right = -47;
+
+			auto r0 = m1.get_row_0();
+			auto r1 = m1.get_row_1();
+			auto r2 = m1.get_row_2();
+
+			auto res = (r0.cross(r1).dot(r2));
 
 			//Assert::AreEqual(m1.determinant(), wrong);
 			Assert::AreEqual(m1.determinant(), right);
+		}
+
+		TEST_METHOD(Determinant4X4)
+		{
+			matrix4i m1{6, 0, -1, 2,
+			-1, 2, 3, 6,
+			4, -3, 0, 0,
+			1, 5, 7, 2};
+			int wrong = 312;
+			int right = -844;
+
+			//auto r0 = m1.get_row_0();
+			//auto r1 = m1.get_row_1();
+			//auto r2 = m1.get_row_2();
+
+			//auto res = (r0.cross(r1).dot(r2));
+
+			//Assert::AreEqual(m1.determinant(), wrong);
+			Assert::AreEqual(right, m1.determinant());
 		}
 	};
 }

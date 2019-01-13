@@ -1189,6 +1189,10 @@ namespace knu {
 
 				T determinant() const
 				{
+					// maybe as an optimization for calculating 3x3 determinant
+					// you could do:
+					// (row0.cross(row1)).dot(row2)
+					// to get the determinant
 					return (elements[0] * elements[4] * elements[8]) +
 						(elements[1] * elements[5] * elements[6]) +
 						(elements[2] * elements[3] * elements[7]) -
@@ -1679,6 +1683,59 @@ namespace knu {
 						row3.x, row3.y, row3.z, row3.w);
 
 					return res;
+				}
+
+				T determinant() const
+				{
+					auto row0 = get_row_0();
+					auto row1 = get_row_1();
+					auto row2 = get_row_2();
+					auto row3 = get_row_3();
+
+					mat3<T> matrix_sans_col0
+					{ 
+						row1.y, row1.z, row1.w,
+						row2.y, row2.z, row2.w,
+						row3.y, row3.z, row3.w
+					};
+
+					mat3<T> matrix_sans_col1{
+						row1.x, row1.z, row1.w,
+						row2.x, row2.z, row2.w,
+						row3.x, row3.z, row3.w
+					};
+
+					mat3<T> matrix_sans_col2
+					{
+						row1.x, row1.y, row1.w,
+						row2.x, row2.y, row2.w,
+						row3.x, row3.y, row3.w
+					};
+
+					mat3<T> matrix_sans_col3
+					{
+						row1.x, row1.y, row1.z,
+						row2.x, row2.y, row2.z,
+						row3.x, row3.y, row3.z
+					};
+
+					T det0 = matrix_sans_col0.determinant();
+					T det1 = matrix_sans_col1.determinant();
+					T det2 = matrix_sans_col2.determinant();
+					T det3 = matrix_sans_col3.determinant();
+
+					return (row0.x * det0) + (-1 * row0.y * det1) +
+						(row0.z * det2) + (-1 * row0.w * det3);
+			
+					/*return (elements[0] * elements[5] * elements[10] * elements[15]) +
+						(elements[1] * elements[6] * elements[11] * elements[12]) +
+						(elements[2] * elements[7] * elements[8] * elements[13]) +
+						(elements[3] * elements[4] * elements[9] * elements[14]) -
+						(elements[3] * elements[6] * elements[9] * elements[12]) -
+						(elements[2] * elements[5] * elements[8] * elements[15]) -
+						(elements[1] * elements[4] * elements[11] * elements[14]) -
+						(elements[0] * elements[7] * elements[10] * elements[13]);
+						*/
 				}
 
 				mat3<T> make_3x3() const
