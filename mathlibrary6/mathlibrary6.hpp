@@ -2022,6 +2022,36 @@ namespace knu {
 			{
 				return make_frustrum<float>(left, right, bottom, top, z_near, z_far);
 			}
+
+			// This is how you would use fov_perspective
+			/*const GLint perspective_location = 0, modelview_location = 4;
+			glUniformMatrix4fv(perspective_location, 1, false, perspective_matrix.data());
+
+			auto mt = matrix4f::translation_matrix(0.0f, 0.0f, -4.0f);
+			auto mr = matrix4f::rotation_y_matrix(-rotation_angle);
+			modelview_matrix = mr * mt;
+
+			glUniformMatrix4fv(modelview_location, 1, false, modelview_matrix.data());*/
+			inline mat4<float> fov_perspective(float fov_y_degrees,
+				float aspect_ratio, float z_near, float z_far)
+			{
+				float radians = degrees_to_radians<float>(fov_y_degrees) / 2.0f;
+				float f = 1.0f / tan(radians);
+
+				float a = 1.0f / f;
+				float b = f;
+				float c = (z_far + z_near) / (z_near - z_far);
+				float d = (2.0f * z_far * z_near) / (z_near - z_far);
+
+				knu::math::mat4<float> persp
+				{
+					a, 0.0f, 0.0f, 0.0f,
+					0.0f, b, 0.0f, 0.0f,
+					0.0f, 0.0f, c, -1.0f,
+					0.0f, 0.0f, d, 0.0f,
+				};
+				return persp;
+			}
 		} // namespace of v1
 
 		using vector2f = vec2<float>;
