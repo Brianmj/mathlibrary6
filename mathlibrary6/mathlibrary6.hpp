@@ -1792,6 +1792,24 @@ namespace knu {
 
 			// Math math non member functions
 			template<typename T>
+			vec2<T> operator *(T scalar, const vec2<T>& v)
+			{
+				return v * scalar;
+			}
+
+			template<typename T>
+			vec3<T> operator *(T scalar, const vec3<T>& v)
+			{
+				return v * scalar;
+			}
+
+			template<typename T>
+			vec4<T> operator *(T scalar, const vec4<T>& v)
+			{
+				return v * scalar;
+			}
+
+			template<typename T>
 			vec2<T> operator *(const mat2<T> &m, const vec2<T> &v)
 			{
 				vec2<T> ret;

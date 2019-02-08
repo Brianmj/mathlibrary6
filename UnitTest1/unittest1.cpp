@@ -566,5 +566,17 @@ namespace UnitTest1
 			fmake_ortho(-3, 3, -3, 3, 0.1f, 100.0f);
 		}
 
+		TEST_METHOD(ScalarMultiplyVector)
+		{
+			knu::math::vector2i v1{ 2, 4 };
+			Assert::AreEqual(vector2i{ 8, 16 }, 4 * v1);
+
+			knu::math::vector3i v2{ 2, 3, 4 };
+			Assert::AreEqual(vector3i{ 4, 6, 8 }, 2 * v2);
+
+			vector4i v3{ 1, 2, 3, 4 };
+			Assert::AreEqual(vector4i{ 3, 6, 9, 12 }, 3 * v3);
+		}
+
 	};
 }
